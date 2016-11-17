@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
+* Ruby version 
+    * See .ruby-version and .ruby-gemset. Let's keep it updated.
 
 * System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
+    * Ubuntu 14.04, nginx, mysql, rvm.
 
 * Deployment instructions
-
-* ...
+    * We use capistrano to handle deployments.
+    * Turn on key forwarding: https://developer.github.com/guides/using-ssh-agent-forwarding/
+    * For server setup please follow this: https://www.digitalocean.com/community/tutorials/deploying-a-rails-app-on-ubuntu-14-04-with-capistrano-nginx-and-puma
+        
+    * [TODO] More detailed description.
