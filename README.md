@@ -5,6 +5,8 @@
 
 * System dependencies
     * Ubuntu 14.04, nginx, mysql, rvm.
+    * `sudo apt-get install libmysqlclient-dev`
+    * Install `therubyracer` manually on the server.
 
 * Deployment instructions
     * We use capistrano to handle deployments.

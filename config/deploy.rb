@@ -16,7 +16,7 @@ set :puma_workers,    0
 set :rvm_ruby_version, '2.3.1@eComm'
 
 set :pty,             true
-set :use_sudo,        false
+set :use_sudo,        true
 set :stages,          [:production, :staging]
 set :default_stage,   :staging
 set :deploy_via,      :remote_cache
@@ -30,6 +30,8 @@ set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
+
+set :nginx_log_path,  "/logs/#{fetch(:application)}_#{fetch(:stage)}"
 
 ## Defaults:
 # set :scm,           :git
@@ -74,4 +76,19 @@ namespace :deploy do
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
   after  :finishing,    :restart
+
+  namespace :db do
+    desc 'reset database'
+    task :reset do
+      on roles(:db) do
+        within release_path do
+          with rails_env: fetch(:rails_env) do
+            execute :rake, "db:reset"
+          end
+        end
+      end
+    end
+  end
 end
+
+
