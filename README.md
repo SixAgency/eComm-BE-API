@@ -15,3 +15,8 @@
     * For server setup please follow this: https://www.digitalocean.com/community/tutorials/deploying-a-rails-app-on-ubuntu-14-04-with-capistrano-nginx-and-puma
         
     * [TODO] More detailed description.
+    
+* Deployment
+    * Get hold of `application.yml`. If you have access to server, use: `cap <env> config:pull`
+    * After config changes: `cap <env> config:push`
+    * deploy: `cap <env> deploy`
