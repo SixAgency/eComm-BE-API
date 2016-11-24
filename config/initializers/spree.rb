@@ -16,3 +16,9 @@ Spree.config do |config|
 end
 
 Spree.user_class = "Spree::User"
+
+class ECommConfiguration < Spree::Preferences::Configuration
+  preference :asset_host, :string, default: Figaro.env.asset_host
+end
+
+EComm::Config = ECommConfiguration.new
