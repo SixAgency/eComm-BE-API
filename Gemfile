@@ -1,59 +1,38 @@
 source 'https://rubygems.org'
 
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 
-gem 'spree', github: 'spree/spree'
+gem 'spree', github: 'spree/spree'                  # An open source e-commerce framework
 gem 'spree_auth_devise', github: 'spree/spree_auth_devise'
 gem 'spree_gateway', github: 'spree/spree_gateway'
 
-
-# Use sqlite3 as the database for Active Record
-gem 'mysql2'
+gem 'mysql2'                                        # Mysql library for Ruby
 
 gem 'awesome_print'
 gem 'figaro'
-# Use Puma as the app server
-gem 'puma', '~> 3.0'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
-
-gem 'rack-cors', :require => 'rack/cors'
-
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+gem 'puma', '~> 3.0'                                # Use Puma as the app server
+gem 'sass-rails', '~> 5.0'                          # Use SCSS for stylesheets
+gem 'uglifier', '>= 1.3.0'                          # Use Uglifier as compressor for JavaScript assets
+gem 'coffee-rails', '~> 4.2'                        # Use CoffeeScript for .coffee assets and views
+gem 'therubyracer', platforms: :ruby                # Call JavaScript code and manipulate JavaScript objects from Ruby
+gem 'rack-cors', :require => 'rack/cors'            # Middleware that will make Rack-based apps CORS compatible
+gem 'jquery-rails'                                  # Use jquery as the JavaScript library
+gem 'turbolinks', '~> 5'                            # Turbolinks makes navigating your web application faster.
+gem 'jbuilder', '~> 2.5'                            # Build JSON APIs with ease.
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platform: :mri
+  gem 'byebug', platform: :mri                      # Stop execution and get a debugger console
+  gem 'rspec-rails', '~> 3.5', '>= 3.5.2'           # Is a testing framework
+  gem 'factory_girl_rails', '~> 4.7'                # Is a fixtures replacement support for multiple build strategies
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console'
-  gem 'listen', '~> 3.0.5'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'web-console'                                 # Access an IRB console <%= console %> anywhere in the code.
+  gem 'listen', '~> 3.0.5'                          # Listens to file modifications and notifies about the changes
+  gem 'spring'                                      # Keeping your application running in the background.
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'capistrano',         require: false
+  gem 'capistrano',         require: false          # Executing commands in parallel on multiple remote machines
   gem 'capistrano-rvm',     require: false
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
@@ -61,5 +40,10 @@ group :development do
   gem 'capistrano-upload-config'
 end
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+group :test do
+  gem 'shoulda-matchers', '~> 3.1', '>= 3.1.1'      # Rspec-compatible one-liners that test common Rails functionality
+  gem 'webmock', '~> 2.3', '>= 2.3.1'               # stubbing HTTP requests and setting expectations on HTTP requests
+  gem 'database_cleaner', '~> 1.5', '>= 1.5.3'      # set of strategies for cleaning database
+end
+
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby] # For use with TZInfo
