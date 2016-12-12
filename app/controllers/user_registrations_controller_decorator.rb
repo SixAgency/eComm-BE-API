@@ -1,5 +1,5 @@
 Spree::UserRegistrationsController.class_eval do
-  skip_before_filter :verify_authenticity_token, :only => :create
+  skip_before_filter :verify_authenticity_token, :only => :create, if: :api_request?
 
   def create
     @user = build_resource(spree_user_params)
@@ -27,7 +27,7 @@ Spree::UserRegistrationsController.class_eval do
         expire_data_after_sign_in!
         respond_to do |format|
           format.json {
-            render :json => {:message => "You have signed up successfully but the user is inactive for the moment"}.to_json
+            render :json => {:message => "You have signed up successfully but the user is inactive for the moment"}
           }
 
           format.html {
@@ -45,5 +45,11 @@ Spree::UserRegistrationsController.class_eval do
         format.html { render :new }
       end
     end
+  end
+
+  private
+
+  def api_request?
+    request.format.json?
   end
 end
