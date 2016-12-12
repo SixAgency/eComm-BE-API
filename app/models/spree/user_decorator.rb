@@ -1,6 +1,6 @@
 Spree::User.class_eval do
 
-    before_validation :add_spree_token
+    before_validation :set_api_token
 
     private
 
