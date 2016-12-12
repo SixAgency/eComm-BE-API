@@ -8,6 +8,9 @@
     * `sudo apt-get install libmysqlclient-dev`
     * Install `therubyracer` manually on the server.
     * Install `imagemagick`
+    
+* Development instructions
+    * We use mailcatcher to handle mails: https://mailcatcher.me/.
 
 * Deployment instructions
     * We use capistrano to handle deployments.
