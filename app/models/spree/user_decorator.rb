@@ -1,0 +1,1 @@
+Spree::User.send :include, UserHasApiToken
