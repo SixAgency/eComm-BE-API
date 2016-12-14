@@ -1,6 +1,5 @@
 Spree::UserRegistrationsController.class_eval do
-  skip_before_filter :verify_authenticity_token, only: [:create], if: :api_request?
-  before_action :authorize_register_user, only: [:create], if: :api_request?
+  include CheckDeviseAuthorization
 
   def create
     @user = build_resource(spree_user_params)
@@ -47,17 +46,4 @@ Spree::UserRegistrationsController.class_eval do
     end
   end
 
-  private
-
-  def api_request?
-    request.content_type =~ /json/
-  end
-
-  def authorize_register_user
-    respond_to do |format|
-      format.json {
-        render status: 401, json: { errors: 'User already logged in'}
-      }
-    end if spree_current_user
-  end
 end

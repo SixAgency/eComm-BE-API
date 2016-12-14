@@ -1,6 +1,5 @@
 Spree::UserSessionsController.class_eval do
-  skip_before_filter :verify_authenticity_token, only: [:create], if: :api_request?
-  prepend_before_action :authorize_login, only: [:create], if: :api_request?
+  include CheckDeviseAuthorization
 
   def create
     authenticate_spree_user!
@@ -40,20 +39,5 @@ Spree::UserSessionsController.class_eval do
         }
       end
     end
-  end
-
-  #TODO Daniel: Refactor bellow methods (DRY) - see user_reigstrations_controller_decorator.rb
-  private
-
-  def api_request?
-    request.content_type =~ /json/
-  end
-
-  def authorize_login
-    respond_to do |format|
-      format.json {
-        render status: 401, json: { errors: 'User already logged in' }
-      }
-    end if spree_current_user
   end
 end
