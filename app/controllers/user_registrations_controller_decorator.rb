@@ -14,6 +14,7 @@ Spree::UserRegistrationsController.class_eval do
           set_flash_message :notice, :signed_up
 
           format.json do
+            spree_current_user = resource
             render :json => { user: { email: spree_current_user.email, spree_api_key: spree_current_user.spree_api_key } }
           end
 
