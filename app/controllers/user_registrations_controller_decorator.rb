@@ -1,5 +1,6 @@
 Spree::UserRegistrationsController.class_eval do
-  skip_before_filter :verify_authenticity_token, :only => :create, if: :api_request?
+  skip_before_filter :verify_authenticity_token, only: [:create], if: :api_request?
+  before_action :authorize_register_user, only: [:create], if: :api_request?
 
   def create
     @user = build_resource(spree_user_params)
@@ -12,9 +13,8 @@ Spree::UserRegistrationsController.class_eval do
 
         respond_to do |format|
           set_flash_message :notice, :signed_up
-
           format.json do
-            render :json => { user: { email: spree_current_user.email, spree_api_key: spree_current_user.spree_api_key } }
+            render :json => { user: { email: resource.email, spree_api_key: resource.spree_api_key } }
           end
 
           format.html do
@@ -50,6 +50,14 @@ Spree::UserRegistrationsController.class_eval do
   private
 
   def api_request?
-    request.format.json?
+    request.content_type =~ /json/
+  end
+
+  def authorize_register_user
+    respond_to do |format|
+      format.json {
+        render status: 401, json: { errors: 'User already logged in'}
+      }
+    end if spree_current_user
   end
 end
