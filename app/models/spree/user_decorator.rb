@@ -1,1 +1,1 @@
-Spree::User.send :include, UserHasApiToken
+Spree::User.send :include, UserHasApiToken, UserHasAddresses
