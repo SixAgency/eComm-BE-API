@@ -22,3 +22,5 @@ class ECommConfiguration < Spree::Preferences::Configuration
 end
 
 EComm::Config = ECommConfiguration.new
+
+Spree::Ability.register_ability(LocationOwnerAbility)
