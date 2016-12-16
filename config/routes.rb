@@ -11,9 +11,7 @@ Rails.application.routes.draw do
   Spree::Core::Engine.add_routes do
     namespace :api, defaults: { format: 'json' } do
       namespace :v1 do
-       resources :users, only: [] do
-         resources :addreses, except: [:new, :edit], controller: :user_addresses
-       end
+        resources :addresses, except: [:new, :edit], controller: :user_addresses
       end
     end
   end

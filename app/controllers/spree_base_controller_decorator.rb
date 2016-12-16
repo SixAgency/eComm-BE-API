@@ -1,1 +1,0 @@
-Spree::Api::BaseController.send :include, EcommCurrentUser
