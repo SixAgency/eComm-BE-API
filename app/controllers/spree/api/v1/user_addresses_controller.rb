@@ -16,7 +16,7 @@ module Spree
           @address = current_api_user.spree_addresses.new(resource_params)
 
           if @address.save
-            #TODO set_default_resource
+            set_default_resource
 
             render status: 201, json: { address: @address }
           else
@@ -34,7 +34,7 @@ module Spree
           authorize! :update, Spree::Address
 
           if resource.update_attributes(resource_params)
-            #TODO set_default_resource
+            set_default_resource
 
             render status: 200, json: { address: resource }
           else
@@ -83,16 +83,10 @@ module Spree
 
         # update resource and also default resource in User model
         def set_default_resource
-          return unless params[:address_types]
-
-          if resource
-            address_types = JSON.parse(params[:address_types])
-            current_api_user.bill_address_id = resource.id if address_types.include?('bill_address')
-            current_api_user.ship_address_id = resource.id if address_types.include?('ship_address')
-            current_api_user.save
-          else
-            respond_not_found
-          end
+          return unless params[:default_address_types]
+          current_api_user.bill_address_id = resource.id if params[:default_address_types].include?('bill_address')
+          current_api_user.ship_address_id = resource.id if params[:default_address_types].include?('ship_address')
+          current_api_user.save
         end
 
         # update only the default resources
