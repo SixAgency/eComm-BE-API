@@ -1,0 +1,1 @@
+Spree::Address.send :include, AddressVerifyDuplicate
