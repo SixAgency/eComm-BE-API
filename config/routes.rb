@@ -7,4 +7,17 @@ Rails.application.routes.draw do
   # We ask that you don't use the :as option here, as Spree relies on it being the default of "spree"
   mount Spree::Core::Engine, at: '/'
           # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  Spree::Core::Engine.add_routes do
+    namespace :api, defaults: { format: 'json' } do
+      namespace :v1 do
+        resources :addresses, except: [:new, :edit], controller: :user_addresses do
+          collection do
+            patch 'default', to: 'user_addresses#default_resources'
+          end
+        end
+      end
+    end
+  end
+
 end
