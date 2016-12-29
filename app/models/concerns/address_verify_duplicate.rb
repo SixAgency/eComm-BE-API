@@ -14,12 +14,9 @@ module AddressVerifyDuplicate
   end
 
   def similar_resource_exists?
-    old_resources = Spree::Address.where(attributes.except('id', 'updated_at', 'created_at'))
-    old_resources.any? ? exists_one?(old_resources) : false
-  end
-
-  def exists_one?(old_resources)
-    old_resources.map {|resource| resource.id != id && resource.user_id.present? }.include?(true)
+    Spree::Address
+        .where(attributes.except('id', 'updated_at', 'created_at'))
+        .where.not(id: id, user_id: nil).any?
   end
 
 end
