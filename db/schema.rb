@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215134940) do
+ActiveRecord::Schema.define(version: 20170103172063) do
 
   create_table "friendly_id_slugs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "slug",                      null: false
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20161215134940) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "user_id"
+    t.string   "braintree_id"
     t.index ["country_id"], name: "index_spree_addresses_on_country_id", using: :btree
     t.index ["firstname"], name: "index_addresses_on_firstname", using: :btree
     t.index ["lastname"], name: "index_addresses_on_lastname", using: :btree
@@ -86,6 +87,22 @@ ActiveRecord::Schema.define(version: 20161215134940) do
     t.index ["position"], name: "index_spree_assets_on_position", using: :btree
     t.index ["viewable_id"], name: "index_assets_on_viewable_id", using: :btree
     t.index ["viewable_type", "type"], name: "index_assets_on_viewable_type_and_type", using: :btree
+  end
+
+  create_table "spree_braintree_checkouts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "transaction_id"
+    t.string   "state"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "paypal_email"
+    t.string   "advanced_fraud_data"
+    t.string   "risk_id"
+    t.string   "risk_decision"
+    t.string   "braintree_last_digits", limit: 4
+    t.string   "braintree_card_type"
+    t.boolean  "admin_payment"
+    t.index ["state"], name: "index_spree_braintree_checkouts_on_state", using: :btree
+    t.index ["transaction_id"], name: "index_spree_braintree_checkouts_on_transaction_id", using: :btree
   end
 
   create_table "spree_calculators", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -330,6 +347,8 @@ ActiveRecord::Schema.define(version: 20161215134940) do
     t.string   "number"
     t.string   "cvv_response_code"
     t.string   "cvv_response_message"
+    t.string   "braintree_token"
+    t.string   "braintree_nonce"
     t.index ["number"], name: "index_spree_payments_on_number", using: :btree
     t.index ["order_id"], name: "index_spree_payments_on_order_id", using: :btree
     t.index ["payment_method_id"], name: "index_spree_payments_on_payment_method_id", using: :btree
