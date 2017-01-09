@@ -1,5 +1,6 @@
 require 'figaro'
 require 'byebug'
+# require 'whenever/capistrano'
 
 Figaro.application = Figaro::Application.new environment: 'development',
                                              path: "#{`pwd`.strip}/config/application.yml"
@@ -32,6 +33,8 @@ set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
 
 set :nginx_log_path,  "/logs/#{fetch(:application)}_#{fetch(:stage)}"
+
+# set :whenever_cron,   -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 
 ## Defaults:
 # set :scm,           :git

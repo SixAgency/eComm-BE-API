@@ -47,3 +47,4 @@ group :test do
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby] # For use with TZInfo
+gem 'spree_braintree_vzero', github: 'spree-contrib/spree_braintree_vzero'
