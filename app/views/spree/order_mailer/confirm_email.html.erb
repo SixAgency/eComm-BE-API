@@ -1,0 +1,102 @@
+<tbody><tr>
+  <td valign="top" style="padding:48px">
+    <div style="color:#737373;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size:14px;line-height:150%;text-align:left">
+
+      <p style="margin:0 0 16px">We thank you for your order.</p>
+      <p style="margin:0 0 16px">At this time through the website, we ship within the US only via UPS ground shipping and USPS priority mail.</p>
+      <p style="margin:0 0 16px">If you would like to expedite your items or if this is an international order please immediately reply to this email so that we can discuss your shipping options.</p>
+      <p style="margin:0 0 16px">If you choose an expedited service or international shipping, additional charges will apply.</p>
+      <p style="margin:0 0 16px">Please note that we cannot be held responsible for shipping delays due to holidays and/or the weather.</p>
+      <p style="margin:0 0 16px">If you have purchased a <b>B’ING YOU</b> ring please allow 2 weeks for the custom order process.</p>
+      <p style="margin:0 0 16px">If you have purchased our <b>ks Mentoring</b>  program, we will send you an additional note with the information required to secure your appointment.</p>
+
+      <h2 style="color:#1adab1;display:block;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size:18px;font-weight:bold;line-height:130%;margin:16px 0 8px;text-align:left">
+        <a href="<%= order_url(@order.number) %>" style="color:#1adab1;font-weight:normal;text-decoration:underline" target="_blank">Order#<%= @order.number %></a> (<%= time_tag Time.now %>)</h2>
+
+      <table cellspacing="0" cellpadding="6" style="width:100%;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#737373;border:1px solid #e4e4e4" border="1">
+        <thead><tr>
+          <th scope="col" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Product</th>
+          <th scope="col" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Quantity</th>
+          <th scope="col" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Price</th>
+        </tr></thead>
+        <tbody>
+          <% @order.line_items.each do |item| %>
+            <tr>
+              <td style="text-align:left;vertical-align:middle;border:1px solid #eee;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;word-wrap:break-word;color:#737373;padding:12px"><%= "#{item.name} (##{item.variant.sku})" %><br><small></small></td>
+              <td style="text-align:left;vertical-align:middle;border:1px solid #eee;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#737373;padding:12px"><%= item.quantity %></td>
+              <td style="text-align:left;vertical-align:middle;border:1px solid #eee;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#737373;padding:12px"><span><%= item.single_money.to_html %></span></td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+        <tr>
+          <th scope="row" colspan="2" style="text-align:left;border-top-width:4px;color:#737373;border:1px solid #e4e4e4;padding:12px">Subtotal:</th>
+          <td style="text-align:left;border-top-width:4px;color:#737373;border:1px solid #e4e4e4;padding:12px"><span><%= @order.display_item_total.to_html %></span></td>
+        </tr>
+        <tr>
+          <th scope="row" colspan="2" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Shipping:</th>
+          <td style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">
+            <span><%= Spree::Money.new(@order.shipment_total, currency: @order.currency) %></span>&nbsp;<small>via&nbsp;
+              <%= @order.shipments.map { |shipment| shipment.selected_shipping_rate.name }.join(', ') %>
+            </small>
+          </td>
+        </tr>
+
+        <% if @order.all_adjustments.tax.exists? %>
+          <tr>
+            <th scope="row" colspan="2" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Tax:</th>
+            <td style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">
+              <span><%= Spree::Money.new(@order.additional_tax_total, currency: @order.currency) %></span>&nbsp;<small>via&nbsp;
+                <%= @order.all_adjustments.tax.pluck(:label).uniq.join(', ') %>
+              </small>
+            </td>
+          </tr>
+        <% end %>
+
+        <% if @order.all_adjustments.promotion.eligible.exists? %>
+          <tr>
+            <th scope="row" colspan="2" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Promotion:</th>
+            <td style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">
+              <span><%= Spree::Money.new(@order.promo_total, currency: @order.currency) %></span>&nbsp;<small>via&nbsp;
+              <%= @order.all_adjustments.promotion.eligible.pluck(:label).uniq.join(', ') %>
+            </small>
+            </td>
+          </tr>
+        <% end %>
+
+        <tr>
+          <th scope="row" colspan="2" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Payment Method:</th>
+          <td style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px"><%= @order.payments.map {|payment| Spree::PaymentMethod.find_with_destroyed(payment.payment_method_id).name if payment }.uniq.join(', ') %></td>
+        </tr>
+        <tr>
+          <th scope="row" colspan="2" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Total:</th>
+          <td style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px"><span><%= @order.display_total %></span></td>
+        </tr>
+        </tfoot>
+      </table>
+      <h2 style="color:#1adab1;display:block;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size:18px;font-weight:bold;line-height:130%;margin:16px 0 8px;text-align:left">Customer details</h2>
+      <ul>
+        <li>
+          <strong>Email:</strong> <span style="color:#505050;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif"><a href="mailto:<%= @order.email %>" target="_blank"><%= @order.email %></a></span>
+        </li>
+        <li>
+          <strong>Phone:</strong> <span style="color:#505050;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif">@order.bill_address.phone</span>
+        </li>
+      </ul>
+      <table cellspacing="0" cellpadding="0" style="width:100%;vertical-align:top" border="0"><tbody><tr>
+        <td valign="top" width="50%">
+          <h3 style="color:#1adab1;display:block;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size:16px;font-weight:bold;line-height:130%;margin:16px 0 8px;text-align:left">Billing address</h3>
+          <% bill_address = @order.bill_address %>
+          <p style="color:#737373;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;margin:0 0 16px"><%= "#{bill_address.firstname} #{bill_address.lastname}" %>
+            <br><%= bill_address.address1 %><br><%= bill_address.city %><br><%= bill_address.state.name %><br><%= bill_address.zipcode %></p>
+        </td>
+        <td valign="top" width="50%">
+          <h3 style="color:#1adab1;display:block;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size:16px;font-weight:bold;line-height:130%;margin:16px 0 8px;text-align:left">Shipping address</h3>
+          <% ship_address = @order.ship_address %>
+          <p style="color:#737373;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;margin:0 0 16px"><%= "#{ship_address.firstname} #{ship_address.lastname}" %>
+            <br><%= ship_address.address1 %><br><%= ship_address.city %><br><%= ship_address.state.name %><br><%= ship_address.zipcode %></p>
+        </td>
+      </tr></tbody></table>
+    </div>
+  </td>
+</tr></tbody>

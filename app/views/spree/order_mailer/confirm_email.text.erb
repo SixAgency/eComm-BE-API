@@ -1,0 +1,47 @@
+We thank you for your order.
+At this time through the website, we ship within the US only via UPS ground shipping and USPS priority mail.
+If you would like to expedite your items or if this is an international order please immediately reply to this email so that we can discuss your shipping options.
+If you choose an expedited service or international shipping, additional charges will apply.
+Please note that we cannot be held responsible for shipping delays due to holidays and/or the weather.
+If you have purchased a B’ING YOU ring please allow 2 weeks for the custom order process.
+If you have purchased our ks Mentoring  program, we will send you an additional note with the information required to secure your appointment.
+
+
+<a href="<%= order_url(@order.number) %>" target="_blank">Order#<%= @order.number %></a> (<%= Time.now %>)
+
+<% @order.line_items.each do |item| %>
+  Product: <%= "#{item.name} (##{item.variant.sku})" %>
+  Quantity: <%= item.quantity %>
+  Price: <%= item.single_money.to_html %>
+
+<% end %>
+---------------------------
+Subtotal: <%= @order.display_item_total.to_html %>
+---------------------------
+
+Shipping: <%= Spree::Money.new(@order.shipment_total, currency: @order.currency) %> <%= @order.shipments.map { |shipment| shipment.selected_shipping_rate.name }.join(', ') %>
+<% if @order.all_adjustments.tax.exists? %>
+  Tax: <%= Spree::Money.new(@order.additional_tax_total, currency: @order.currency) %> via <%= @order.all_adjustments.tax.pluck(:label).uniq.join(', ') %>
+<% end %>
+<% if @order.all_adjustments.promotion.eligible.exists? %>
+  Promotion: <%= Spree::Money.new(@order.promo_total, currency: @order.currency) %> via <%= @order.all_adjustments.promotion.eligible.pluck(:label).uniq.join(', ') %>
+<% end %>
+Payment Method: <%= @order.payments.map {|payment| Spree::PaymentMethod.find_with_destroyed(payment.payment_method_id).name if payment }.uniq.join(', ') %>
+
+---------------------------
+Total: <%= @order.display_total %>
+---------------------------
+
+Customer details
+---------------------
+
+  1. Email: <a href="mailto:<%= @order.email %>" target="_blank"><%= @order.email %></a>
+
+  2. Phone: <%= @order.bill_address.phone %>
+
+  3. Billing address: <% bill_address = @order.bill_address %>, <%= "#{bill_address.firstname} #{bill_address.lastname}" %>, <%= bill_address.address1 %>, <%= bill_address.city %>, <%= bill_address.state.name %>, <%= bill_address.zipcode %>
+
+  4. Shipping address: <% ship_address = @order.ship_address %>, <%= "#{ship_address.firstname} #{ship_address.lastname}" %>, <%= ship_address.address1 %>, <%= ship_address.city %>, <%= ship_address.state.name %>, <%= ship_address.zipcode %>
+
+
+<a href="<%= root_url %>" target="_blank">krissorbie.com</a>
