@@ -26,7 +26,15 @@
               <td valign="top" id="body_content" style="background-color: #fdfdfd;">
                 <!-- Content -->
                 <table border="0" cellpadding="20" cellspacing="0" width="100%">
-                  <%= yield %>
+                  <tbody>
+                    <tr>
+                    <td valign="top" style="padding:48px">
+                        <div style="color:#737373;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size:14px;line-height:150%;text-align:left">
+                          <%= yield %>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
                 <!-- End Content -->
               </td>
