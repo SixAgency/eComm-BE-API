@@ -1,0 +1,21 @@
+<% @order.line_items.each do |item| %>
+    Product: <%= "#{item.name} (##{item.variant.sku})" %>
+    Quantity: <%= item.quantity %>
+    Price: <%= item.single_money.to_html %>
+<% end %>
+---------------------------
+Subtotal: <%= @order.display_item_total.to_html %>
+---------------------------
+
+Shipping: <%= Spree::Money.new(@order.shipment_total, currency: @order.currency) %> <%= @order.shipments.map { |shipment| shipment.selected_shipping_rate.name }.join(', ') %>
+<% if @order.all_adjustments.tax.exists? %>
+    Tax: <%= Spree::Money.new(@order.additional_tax_total, currency: @order.currency) %> via <%= @order.all_adjustments.tax.pluck(:label).uniq.join(', ') %>
+<% end %>
+<% if @order.all_adjustments.promotion.eligible.exists? %>
+    Promotion: <%= Spree::Money.new(@order.promo_total, currency: @order.currency) %> via <%= @order.all_adjustments.promotion.eligible.pluck(:label).uniq.join(', ') %>
+<% end %>
+Payment Method: <%= @order.payments.map {|payment| Spree::PaymentMethod.find_with_destroyed(payment.payment_method_id).name if payment }.uniq.join(', ') %>
+
+---------------------------
+Total: <%= @order.display_total %>
+---------------------------
