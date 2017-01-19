@@ -2,13 +2,13 @@ module Spree
   module Api
     module V1
       class UserAddressesController < Spree::Api::BaseController
-        before_action :respond_not_found, only: [:show, :update, :destroy]
+        load_and_authorize_resource :class => Address, except: [:index, :create]
+
+        before_action :resource, only: [:show, :update, :destroy]
 
         ADDRESS_TYPE = %w(bill ship)
 
         def index
-          authorize! :read, Spree::Address
-
           respond_with_resource 200
         end
 
@@ -25,14 +25,10 @@ module Spree
         end
 
         def show
-          authorize! :read, Spree::Address
-
           render status: 200, json: { address: resource }
         end
 
         def update
-          authorize! :update, Spree::Address
-
           if resource.update_attributes(resource_params)
             set_default_resource
 
@@ -43,14 +39,12 @@ module Spree
         end
 
         def destroy
-          authorize! :destroy, Spree::Address
           resource.destroy
+          delete_default_resources
           render status: 204, json: {}
         end
 
         def default_resources
-          authorize! :update, Spree::User
-
           if exists_user_resources?
             set_default_resources
             render status: 200, json: { default_addresses: new_default_resources }, except: [:user_id]
@@ -130,6 +124,22 @@ module Spree
               bill_address: current_api_user.bill_address,
               ship_address: current_api_user.ship_address
           }
+        end
+
+        #TODO Daniel: must refactor this method
+        def delete_default_resources
+          must_save = false
+          if current_api_user.ship_address_id = resource.id
+            current_api_user.ship_address_id = nil
+            must_save = true
+          end
+
+          if current_api_user.bill_address_id = resource.id
+            current_api_user.bill_address_id = nil
+            must_save = true
+          end
+
+          current_api_user.save if must_save
         end
 
       end
