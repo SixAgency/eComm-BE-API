@@ -1,0 +1,11 @@
+<% if @to_internal %>
+    You have received an order from <%= "#{@order.bill_address_firstname} #{@order.bill_address_lastname}" %>. The order is as follows:
+<% else %>
+    We thank you for your order.
+    At this time through the website, we ship within the US only via UPS ground shipping and USPS priority mail.
+    If you would like to expedite your items or if this is an international order please immediately reply to this email so that we can discuss your shipping options.
+    If you choose an expedited service or international shipping, additional charges will apply.
+    Please note that we cannot be held responsible for shipping delays due to holidays and/or the weather.
+    If you have purchased a B’ING YOU ring please allow 2 weeks for the custom order process.
+    If you have purchased our ks Mentoring  program, we will send you an additional note with the information required to secure your appointment.
+<% end %>

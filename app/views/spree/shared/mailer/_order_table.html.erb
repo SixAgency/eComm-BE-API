@@ -1,0 +1,56 @@
+<table cellspacing="0" cellpadding="6" style="width:100%;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#737373;border:1px solid #e4e4e4" border="1">
+  <thead><tr>
+    <th scope="col" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Product</th>
+    <th scope="col" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Quantity</th>
+    <th scope="col" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Price</th>
+  </tr></thead>
+  <tbody>
+  <% @order.line_items.each do |item| %>
+      <tr>
+        <td style="text-align:left;vertical-align:middle;border:1px solid #eee;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;word-wrap:break-word;color:#737373;padding:12px"><%= "#{item.name} (##{item.variant.sku})" %><br><small></small></td>
+        <td style="text-align:left;vertical-align:middle;border:1px solid #eee;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#737373;padding:12px"><%= item.quantity %></td>
+        <td style="text-align:left;vertical-align:middle;border:1px solid #eee;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#737373;padding:12px"><span><%= item.single_money.to_html %></span></td>
+      </tr>
+  <% end %>
+  </tbody>
+  <tfoot>
+  <tr>
+    <th scope="row" colspan="2" style="text-align:left;border-top-width:4px;color:#737373;border:1px solid #e4e4e4;padding:12px">Subtotal:</th>
+    <td style="text-align:left;border-top-width:4px;color:#737373;border:1px solid #e4e4e4;padding:12px"><span><%= @order.display_item_total.to_html %></span></td>
+  </tr>
+  <tr>
+    <th scope="row" colspan="2" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Shipping:</th>
+    <td style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">
+      <span><%= Spree::Money.new(@order.shipment_total, currency: @order.currency) %></span> <small>via <%= @order.shipments.map { |shipment| shipment.selected_shipping_rate.name }.join(', ') %></small>
+    </td>
+  </tr>
+
+  <% if @order.all_adjustments.tax.exists? %>
+      <tr>
+        <th scope="row" colspan="2" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Tax:</th>
+        <td style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">
+          <span><%= Spree::Money.new(@order.additional_tax_total, currency: @order.currency) %></span> <small>via <%= @order.all_adjustments.tax.pluck(:label).uniq.join(', ') %></small>
+        </td>
+      </tr>
+  <% end %>
+
+  <% if @order.all_adjustments.promotion.eligible.exists? %>
+      <tr>
+        <th scope="row" colspan="2" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Promotion:</th>
+        <td style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">
+          <span><%= Spree::Money.new(@order.promo_total, currency: @order.currency) %></span> <small>via <%= @order.all_adjustments.promotion.eligible.pluck(:label).uniq.join(', ') %>
+        </small>
+        </td>
+      </tr>
+  <% end %>
+
+  <tr>
+    <th scope="row" colspan="2" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Payment Method:</th>
+    <td style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px"><%= @order.payments.map {|payment| Spree::PaymentMethod.find_with_destroyed(payment.payment_method_id).name if payment }.uniq.join(', ') %></td>
+  </tr>
+  <tr>
+    <th scope="row" colspan="2" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Total:</th>
+    <td style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px"><span><%= @order.display_total %></span></td>
+  </tr>
+  </tfoot>
+</table>

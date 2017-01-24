@@ -16,6 +16,8 @@ Rails.application.routes.draw do
             patch 'default', to: 'user_addresses#default_resources'
           end
         end
+
+        resource :contact, only:[:create]
       end
     end
   end

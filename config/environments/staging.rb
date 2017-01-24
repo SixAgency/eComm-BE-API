@@ -66,6 +66,8 @@ Rails.application.configure do
       authentication:       'plain',
       enable_starttls_auto: true  }
 
+  # add image_tag and image_url for mailer view
+  config.action_mailer.asset_host = 'http://staging.ecomm.com'
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

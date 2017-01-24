@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title><?= @mail_attributes[:site_name] ?></title>
+</head>
+<body marginleft="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+<div id="wrapper" dir="ltr">
+  <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+    <tr>
+      <td align="center" valign="top">
+        <div id="template_header_image">
+          <? if ( @mail_attributes[:header_img] ) ?>
+          <p style="margin-top:0;">
+            <img src="<?= @mail_attributes[:header_img] ?>" alt="<?= @mail_attributes[:site_name] ?>" />
+          </p>
+          <? endif ?>
+
+        </div>
+        <table border="0" cellpadding="0" cellspacing="0" width="600" id="template_container">
+          <tr>
+            <td align="center" valign="top">
+              <!-- Header -->
+              <table border="0" cellpadding="0" cellspacing="0" width="600" id="template_header" style="background:url('<?= image_url('logo_heading-1.png') ?>') center/150%;">
+                <tr>
+                  <td id="header_wrapper">
+                    <a href="<?= root_url ?>" title="<?= t(:home) ?>" class="logo" style="width:77px;height:75px">
+
+                      <!-- Get logo -->
+                      <img class="logo-light regular-logo" src="<?= image_url('logo-dark.png') ?>" width="280" alt="<?= @mail_attributes[:site_name] ?>">
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <!-- End Header -->
+            </td>
+          </tr>
+          <tr>
+            <td align="center" valign="top">
+              <!-- Body -->
+              <table border="0" cellpadding="0" cellspacing="0" width="600" id="template_body">
+                <tr>
+                  <td valign="top" id="body_content">
+                    <!-- Content -->
+                    <table border="0" cellpadding="20" cellspacing="0" width="100%">
+                      <tr>
+                        <td valign="top">
+                          <div id="body_content_inner">
+                            <p>'You have received an order from <?= billing_full_name ?>. The order is as follows:'</p>
+                            <h2 style="color:#1adab1;display:block;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size:18px;font-weight:bold;line-height:130%;margin:16px 0 8px;text-align:left">
+                              <a href="<?= product_edit_url(product_id) ?>" style="color:#1adab1;font-weight:normal;text-decoration:underline" target="_blank">Order
+                                #<?= @order.number ?></a> (<?= time_tag(@order.created_at) ?>)</h2>
+                            <table class="td" cellspacing="0" cellpadding="6" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1">
+                              <thead>
+                              <tr>
+                                <th class="td" scope="col" style="text-align:left;"><?= _e( 'Product', 'woocommerce' ); ?></th>
+                                <th class="td" scope="col" style="text-align:left;"><?= _e( 'Quantity', 'woocommerce' ); ?></th>
+                                <th class="td" scope="col" style="text-align:left;"><?= _e( 'Price', 'woocommerce' ); ?></th>
+                              </tr>
+                              </thead>
+                              <tbody>
+
+                              <? @product.details #TODO see emails ?>
+
+                              </tbody>
+                              <tfoot>
+                              <tr>
+                                <th class="td" scope="row" colspan="2" style="text-align:left; <? if ( i == 1 ) ?><?= 'border-top-width: 4px;' ?><? endif ?>"><?= total_label ?></th>
+                                <td class="td" style="text-align:left; <? if ( i == 1 ) ?><?= 'border-top-width: 4px;'; ?><? endif ?>"><?= total_value ?></td>
+                              </tr><?php
+
+                              </tfoot>
+                            </table>
+                            <h2 style="color:#1adab1;display:block;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size:18px;font-weight:bold;line-height:130%;margin:16px 0 8px;text-align:left">Customer details</h2>
+                            <ul>
+                              <li>
+                                <strong>Email:</strong> <span style="color:#505050;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif">
+                                <a href="mailto:<?= @billing_mailer ?>" target="_blank"><?= @billing_mailer ?></a>
+                              </span>
+                              </li>
+                              <li>
+                                <strong>Tel:</strong> <span style="color:#505050;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif">1000000000</span>
+                              </li>
+                            </ul>
+                            <table cellspacing="0" cellpadding="0" style="width:100%;vertical-align:top" border="0"><tbody><tr>
+                              <td valign="top" width="50%">
+                                <h3 style="color:#1adab1;display:block;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size:16px;font-weight:bold;line-height:130%;margin:16px 0 8px;text-align:left">Billing address</h3>
+
+                                <p style="color:#505050;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;margin:0 0 16px">Levente Csordas<br>133 5th Street<br>Alabama, AL
+                                  35002</p>
+                              </td>
+                              <td valign="top" width="50%">
+                                <h3 style="color:#1adab1;display:block;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size:16px;font-weight:bold;line-height:130%;margin:16px 0 8px;text-align:left">Shipping address</h3>
+
+                                <p style="color:#505050;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;margin:0 0 16px">Levente Csordas<br>133 5th Street<br>Alabama, AL
+                                  35002</p>
+                              </td>
+                            </tr></tbody></table>
