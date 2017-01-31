@@ -34,7 +34,7 @@ module Spree
 
             render status: 200, json: { address: resource }
           else
-            render status: 422, json: {}
+            render status: 422, json: { errors: @address.errors }
           end
         end
 
