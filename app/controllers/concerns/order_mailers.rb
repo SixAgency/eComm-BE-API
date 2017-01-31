@@ -2,7 +2,7 @@ module OrderMailers
   extend ActiveSupport::Concern
 
   included do
-    after_action :new_order_mail, only: [:create], if: -> { @order }
+    # after_action :new_order_mail, only: [:create], if: -> { @order }
   end
 
 
@@ -10,7 +10,7 @@ module OrderMailers
 
   def new_order_mail
     set_mail_attributes
-    Spree::OrderMailer.create_email(@order, @mail_attributes).deliver_later
+    # Spree::OrderMailer.create_email(@order, @mail_attributes).deliver_later
   end
 
   def set_mail_attributes
