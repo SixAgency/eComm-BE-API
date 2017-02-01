@@ -38,7 +38,7 @@ Spree::UserRegistrationsController.class_eval do
       clean_up_passwords(resource)
       respond_to do |format|
         format.json do
-          render status: 400, json: {errors: resource.errors.messages, email: resource.email}
+          render status: 409, json: {errors: resource.errors.messages, email: resource.email}
         end
 
         format.html { render :new }
