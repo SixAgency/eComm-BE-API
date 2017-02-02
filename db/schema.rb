@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170103172063) do
+ActiveRecord::Schema.define(version: 20170202184347) do
 
   create_table "friendly_id_slugs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "slug",                      null: false
@@ -999,6 +999,8 @@ ActiveRecord::Schema.define(version: 20170103172063) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.string   "f_name"
+    t.string   "l_name"
     t.index ["bill_address_id"], name: "index_spree_users_on_bill_address_id", using: :btree
     t.index ["deleted_at"], name: "index_spree_users_on_deleted_at", using: :btree
     t.index ["email"], name: "email_idx_unique", unique: true, using: :btree

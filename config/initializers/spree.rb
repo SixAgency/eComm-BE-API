@@ -24,3 +24,9 @@ end
 EComm::Config = ECommConfiguration.new
 
 Spree::Ability.register_ability(LocationOwnerAbility)
+
+#../gems/spree/core/lib/spree/permitted_attributes.rb - to let edit
+Spree::PermittedAttributes.user_attributes.push :f_name, :l_name
+
+# ..gems/spree/api/app/helpers/spree/api/api_helpers.rb to let show
+Spree::Api::ApiHelpers.user_attributes.push :f_name, :l_name
