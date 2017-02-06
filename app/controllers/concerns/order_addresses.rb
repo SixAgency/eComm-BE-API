@@ -24,12 +24,15 @@ module OrderAddresses
     else
 
       # set new address for user with user_id but not let duplicate address when are the same
-      create_address(type) if address_was_not_created?
+      create_address(type) unless address_created?(type)
     end
   end
 
   def address_params(type)
-    params.require(:order).permit("#{type}_address_attributes".to_sym => [:firstname, :lastname, :address1, :city, :phone, :zipcode, :state_id, :country_id, :user_id])
+    params.require(:order).permit("#{type}_address_attributes".to_sym => [
+        :firstname, :lastname, :address1, :address2, :city, :zipcode, :phone,
+        :state_id, :country_id, :user_id, :company, :alternative_phone
+    ])
   end
 
   def create_address(type)
@@ -47,7 +50,9 @@ module OrderAddresses
     params[:order][:bill_address_attributes] == params[:order][:ship_address_attributes]
   end
 
-  def address_was_not_created?
-    @created_address.nil?
+  def address_created?(type)
+    @created_address || Spree::Address
+                                 .where(address_params(type)["#{type}_address_attributes"].except('id', 'updated_at', 'created_at'))
+                                 .where(user_id: current_api_user.id).any?
   end
 end
