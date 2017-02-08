@@ -6,6 +6,8 @@ module BraintreeApiIntegration
   end
 
   def process_paypal_express
+    @current_order = Spree::Order.find_by(number: params[:id])
+
     if params[:paypal].blank? || params[:paypal][:payment_method_nonce].blank?
       # when user goes back from checkout, paypal express payments should be invalidated  to ensure standard checkout flow
       current_order.invalidate_paypal_express_payments
@@ -16,11 +18,10 @@ module BraintreeApiIntegration
 
     email = params[:order][:email]
     # when user goes back from checkout, order's state should be resetted to ensure paypal checkout flow
-    @current_order = Spree::Order.find_by(number: params[:id])
     current_order.state = 'cart'
     current_order.save_paypal_payment(payment_params)
 
-    manage_paypal_addresses
+    # manage_paypal_addresses
     payment_method.push_order_to_state(current_order, 'address', email)
     current_order.remove_phone_number_placeholder
   end
