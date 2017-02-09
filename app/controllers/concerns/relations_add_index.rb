@@ -4,27 +4,19 @@ module RelationsAddIndex
   def self.included(base)
     base.class_eval do
       def index
-        render json: product_with_relations_included
+        render json: product_and_relations
       end
 
       private
 
-      def product_with_relations_included
-        result = {
-            product: {
-                id: load_data.id,
-                relations: []
-            }
+      def product_and_relations
+        relations =  load_data.relations.includes(:related_to)
+        {
+          product: {
+            id: load_data.id,
+            relations: relations.as_json(include: :related_to)
+          }
         }
-
-        load_data.relations.includes(:relation_type).each do |relation|
-          next if relation.nil?
-          result[:product][:relations] << relation.attributes
-          result[:product][:relations].last[:related_to] = relation.related_to.attributes
-          result[:product][:relations].last.delete(:related_to_id)
-        end
-
-        result
       end
     end
   end
