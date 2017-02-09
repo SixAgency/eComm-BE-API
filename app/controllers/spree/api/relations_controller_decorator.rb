@@ -1,0 +1,1 @@
+Spree::Api::RelationsController.send :include, RelationsAddIndex

@@ -6,6 +6,7 @@ gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'spree', github: 'spree/spree'                  # An open source e-commerce framework
 gem 'spree_auth_devise', github: 'spree/spree_auth_devise'
 gem 'spree_gateway', github: 'spree/spree_gateway'
+gem 'spree_related_products', github: 'spree-contrib/spree_related_products'
 
 gem 'mysql2'                                        # Mysql library for Ruby
 

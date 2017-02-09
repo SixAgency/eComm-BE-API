@@ -18,6 +18,15 @@ Rails.application.routes.draw do
         end
 
         resource :contact, only:[:create]
+
+        resources :products, only: [], controller: '/spree/admin/products' do
+          get :related, on: :member
+          resources :relations, controller: '/spree/api/relations' do
+            collection do
+              post :update_positions
+            end
+          end
+        end
       end
     end
   end

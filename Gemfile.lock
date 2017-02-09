@@ -10,6 +10,13 @@ GIT
       whenever
 
 GIT
+  remote: git://github.com/spree-contrib/spree_related_products.git
+  revision: 8d51290fb319c83ca332a6bb8bcbf6a7424fa7a5
+  specs:
+    spree_related_products (3.2.0.alpha)
+      spree_backend (>= 3.1.0, < 4.0)
+
+GIT
   remote: git://github.com/spree/spree.git
   revision: 2328cc2f90f993de0b0ed7f03fbb2315cb204a82
   specs:
@@ -456,6 +463,7 @@ DEPENDENCIES
   spree_auth_devise!
   spree_braintree_vzero!
   spree_gateway!
+  spree_related_products!
   spring
   spring-watcher-listen (~> 2.0.0)
   therubyracer
