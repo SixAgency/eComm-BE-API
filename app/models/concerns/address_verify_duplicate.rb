@@ -3,7 +3,12 @@ module AddressVerifyDuplicate
 
   included do
     validate :verify_duplicate
+
+    def self.set_current_api_user(user)
+      @current_api_user ||= user
+    end
   end
+
 
   private
 
@@ -16,7 +21,6 @@ module AddressVerifyDuplicate
   def similar_resource_exists?
     Spree::Address
         .where(attributes.except('id', 'updated_at', 'created_at'))
-        .where.not(id: id, user_id: nil).any?
+        .where(user_id: @current_api_user).any?
   end
-
 end
