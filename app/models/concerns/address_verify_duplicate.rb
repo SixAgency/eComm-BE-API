@@ -22,6 +22,7 @@ module AddressVerifyDuplicate
   def similar_resource_exists?
     Spree::Address
         .where(attributes.except('id', 'updated_at', 'created_at'))
-        .where(user_id: @@current_api_user).any?
+        .where(user_id: @@current_api_user)
+        .where.not(id: self.id).any?
   end
 end
