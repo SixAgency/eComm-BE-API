@@ -1,22 +1,18 @@
 module RelationsAddIndex
-  extend ActiveSupport::Concern
-
   def self.included(base)
     base.class_eval do
       def index
-        render json: product_and_relations
-      end
+        @product =  Spree::Product.includes(relations: {
+            related_to:
+                [
+                    { master:   [:option_values, :images] },
+                    { variants: [:option_values, :images] },
+                    :option_types, :product_properties,
+                    { classifications: :taxon }
+                ]
+        }).friendly.find(params[:product_id])
 
-      private
-
-      def product_and_relations
-        relations =  load_data.relations.includes(:related_to)
-        {
-          product: {
-            id: load_data.id,
-            relations: relations.as_json(include: :related_to)
-          }
-        }
+        respond_with(@product)
       end
     end
   end
