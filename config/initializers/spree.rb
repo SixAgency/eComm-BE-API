@@ -29,6 +29,7 @@ Spree::Ability.register_ability(LocationOwnerAbility)
 Spree::PermittedAttributes.user_attributes.push :f_name, :l_name
 Spree::PermittedAttributes.address_attributes.push :user_id
 Spree::PermittedAttributes.product_attributes.push :max_quantity_allowed_in_cart
+Spree::PermittedAttributes.checkout_attributes.push :line_item_attributes, :ship_address, :bill_address
 
 # ..gems/spree/api/app/helpers/spree/api/api_helpers.rb to let show
 Spree::Api::ApiHelpers.user_attributes.push :f_name, :l_name
