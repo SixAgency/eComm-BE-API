@@ -1,1 +1,2 @@
-Spree::Api::V1::CheckoutsController.send :include, CheckoutAddresses, BraintreeUpdateSourceData
+Spree::Api::V1::CheckoutsController.send :include,
+                                         BraintreeUpdateSourceData, BraintreeApiIntegration
