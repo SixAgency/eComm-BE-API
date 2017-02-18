@@ -7,6 +7,7 @@ gem 'spree', github: 'spree/spree'                  # An open source e-commerce 
 gem 'spree_auth_devise', github: 'spree/spree_auth_devise'
 gem 'spree_gateway', github: 'spree/spree_gateway'
 gem 'spree_related_products', github: 'spree-contrib/spree_related_products'
+gem 'spree_active_shipping', github: 'spree-contrib/spree_active_shipping'
 
 gem 'mysql2'                                        # Mysql library for Ruby
 
