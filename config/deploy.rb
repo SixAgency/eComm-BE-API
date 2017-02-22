@@ -77,6 +77,7 @@ namespace :deploy do
   end
 
   after  :finishing,    :compile_assets
+  after  :finishing,    execute :rake, "swagger::docs"
   after  :finishing,    :cleanup
   after  :finishing,    :restart
 

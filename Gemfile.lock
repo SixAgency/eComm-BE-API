@@ -411,6 +411,9 @@ GEM
       activerecord (>= 4.1, < 5.1)
       state_machines-activemodel (>= 0.3.0)
     stringex (2.6.1)
+    swagger-docs (0.2.9)
+      activesupport (>= 3)
+      rails (>= 3)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -484,6 +487,7 @@ DEPENDENCIES
   spree_related_products!
   spring
   spring-watcher-listen (~> 2.0.0)
+  swagger-docs (~> 0.2.9)
   therubyracer
   turbolinks (~> 5)
   tzinfo-data

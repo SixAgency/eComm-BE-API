@@ -50,3 +50,4 @@ end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby] # For use with TZInfo
 gem 'spree_braintree_vzero', github: 'spree-contrib/spree_braintree_vzero'
+gem 'swagger-docs', '~> 0.2.9'                      # Generates swagger-ui json files for rails apps with APIs
