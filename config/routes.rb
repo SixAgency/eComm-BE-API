@@ -27,6 +27,10 @@ Rails.application.routes.draw do
             end
           end
         end
+
+        resources :orders, only: [] do
+          patch :calculate_shipping, on: :member
+        end
       end
     end
   end

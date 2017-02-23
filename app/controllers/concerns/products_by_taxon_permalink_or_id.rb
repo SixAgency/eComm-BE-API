@@ -1,6 +1,4 @@
 module ProductsByTaxonPermalinkOrId
-  extend ActiveSupport::Concern
-
   def self.included(base)
     base.class_eval do
       def products
