@@ -1,5 +1,5 @@
 class Swagger::Docs::Config
-  def self.base_application; Spree::Core::Engine end
+  def self.base_application; [Spree::Core::Engine, Spree::Api::Engine] end
 end
 
 Swagger::Docs::Config.register_apis(
