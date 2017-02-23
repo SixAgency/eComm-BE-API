@@ -52,6 +52,7 @@ module BraintreeApiIntegration
   end
 
   def braintree_address_params(key)
-    params[:order].require(key).permit(:firstname, :lastname, :zipcode, :city, :address1, :address2, :phone, :full_name, :country, :state)
+    params[:order].require(key).permit(:firstname, :lastname, :zipcode, :city, :address1, :address2,
+                                       :phone, :full_name, :country, :state, :user_address_id)
   end
 end
