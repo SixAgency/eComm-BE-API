@@ -1,8 +1,9 @@
 module CalculateShipping
-  extend ActiveSupport::Concern
-
   def self.included(base)
     base.class_eval do
+      swagger_controller :orders, "Shipping Calculation"
+
+      include Documentation::Orders::CalculateShippingDoc
       def calculate_shipping
         find_order(true)
         authorize! :update, @order, order_token
