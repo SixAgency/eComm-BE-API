@@ -23,7 +23,7 @@ module CalculateShipping
         fake = {firstname: 'Add first name', lastname: 'Add last name',
                 address1: 'Add address', city: 'Add city', phone: 12221244}
 
-        params[:shipments_attributes].merge(fake) { |key, v1, v2| v1 }
+        params[:shipments_attributes] = params[:shipments_attributes].merge(fake) { |key, v1, v2| v1 }
       end
 
       def exists_ship_address?
