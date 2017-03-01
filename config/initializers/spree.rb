@@ -35,3 +35,27 @@ Spree::PermittedAttributes.checkout_attributes.push :line_item_attributes, :ship
 Spree::Api::ApiHelpers.user_attributes.push :f_name, :l_name
 Spree::Api::ApiHelpers.product_attributes.push :max_quantity_allowed_in_cart
 Spree::Api::ApiHelpers.address_attributes.push :user_address_id
+
+# In order to run guest user that don't require an API key
+Spree::Api::Config[:requires_authentication] = false
+
+# Merges users orders to their account after sign in and sign up.
+Warden::Manager.after_set_user except: :fetch do |user, auth, opts|
+  # API flow - json request
+  if auth.params[:order_token].present?
+    if user.is_a?(Spree::User)
+      Spree::Order.incomplete.where(guest_token: auth.params[:order_token], user_id: nil).each do |order|
+        order.associate_user!(user)
+      end
+    end
+  end
+
+  # HTML flow - html request
+  if auth.cookies.signed[:guest_token].present?
+    if user.is_a?(Spree::User)
+      Spree::Order.incomplete.where(guest_token: auth.cookies.signed[:guest_token], user_id: nil).each do |order|
+        order.associate_user!(user)
+      end
+    end
+  end
+end
