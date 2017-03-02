@@ -42,9 +42,9 @@ Spree::Api::Config[:requires_authentication] = false
 # Merges users orders to their account after sign in and sign up.
 Warden::Manager.after_set_user except: :fetch do |user, auth, opts|
   # API flow - json request
-  if auth.params[:order_token].present?
+  if auth.params[:guest_token].present?
     if user.is_a?(Spree::User)
-      Spree::Order.incomplete.where(guest_token: auth.params[:order_token], user_id: nil).each do |order|
+      Spree::Order.incomplete.where(guest_token: auth.params[:guest_token], user_id: nil).each do |order|
         order.associate_user!(user)
       end
     end
