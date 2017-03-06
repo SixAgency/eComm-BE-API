@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223163903) do
 
+ActiveRecord::Schema.define(version: 20170305172822) do
   create_table "friendly_id_slugs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "slug",                      null: false
     t.integer  "sluggable_id",              null: false
@@ -1088,6 +1088,15 @@ ActiveRecord::Schema.define(version: 20170223163903) do
     t.string   "kind"
     t.index ["default_tax"], name: "index_spree_zones_on_default_tax", using: :btree
     t.index ["kind"], name: "index_spree_zones_on_kind", using: :btree
+  end
+
+  create_table "square_customers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.string   "square_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_type", "owner_id"], name: "index_square_customers_on_owner_type_and_owner_id", unique: true, using: :btree
   end
 
 end
