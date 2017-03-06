@@ -30,6 +30,7 @@ Spree::PermittedAttributes.user_attributes.push :f_name, :l_name
 Spree::PermittedAttributes.address_attributes.push :user_id, :user_address_id
 Spree::PermittedAttributes.product_attributes.push :max_quantity_allowed_in_cart
 Spree::PermittedAttributes.checkout_attributes.push :line_item_attributes, :ship_address, :bill_address
+Spree::PermittedAttributes.source_attributes.push :nonce
 
 # ..gems/spree/api/app/helpers/spree/api/api_helpers.rb to let show
 Spree::Api::ApiHelpers.user_attributes.push :f_name, :l_name
@@ -59,3 +60,5 @@ Warden::Manager.after_set_user except: :fetch do |user, auth, opts|
     end
   end
 end
+
+Devise.secret_key = Figaro.env.SECRET_KEY_BASE

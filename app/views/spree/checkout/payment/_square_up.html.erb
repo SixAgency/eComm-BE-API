@@ -1,0 +1,140 @@
+<%= content_for :head do %>
+    <script type="text/javascript" src="https://js.squareup.com/v2/paymentform"></script>
+<% end %>
+
+<script>
+  var applicationId = '<%= payment_method.preferences[:application_id] %>';
+
+  // Initializes the payment form. See the documentation for descriptions of
+  // each of these parameters.
+  var paymentForm = new SqPaymentForm({
+    applicationId: applicationId,
+    inputClass: 'sq-input',
+    inputStyles: [
+      {
+        fontSize: '15px'
+      }
+    ],
+    cardNumber: {
+      elementId: 'sq-card-number',
+      placeholder: '•••• •••• •••• ••••'
+    },
+    cvv: {
+      elementId: 'sq-cvv',
+      placeholder: 'CVV'
+    },
+    expirationDate: {
+      elementId: 'sq-expiration-date',
+      placeholder: 'MM/YY'
+    },
+    postalCode: {
+      elementId: 'sq-postal-code'
+    },
+    callbacks: {
+
+      // Called when the SqPaymentForm completes a request to generate a card
+      // nonce, even if the request failed because of an error.
+      cardNonceResponseReceived: function(errors, nonce, cardData) {
+        var error_messages = [];
+
+        if (errors) {
+          console.log("Encountered errors:");
+
+          // This logs all errors encountered during nonce generation to the
+          // Javascript console.
+          errors.forEach(function(error) {
+            error_messages.push(error.message);
+            console.log('  ' + error.message);
+          });
+
+          // We're about to exit, let's reenable the button
+          window.setTimeout(function() { Spree.enableSave(); }, 2000);
+
+          return false;
+        } else {
+          // No errors occurred. Extract the card nonce.
+          $('#card_nonce').val(nonce);
+          document.getElementById('card_nonce').value = nonce;
+          document.getElementById('square_card_expiry').value = cardData.exp_month.toString() + '/' +
+              (cardData.exp_year % 100).toString();
+          // Send dummy data for first 12 numbers. This will be truncated anyway. Only then nonce is important
+          document.getElementById('square_card_number').value = ('111111111111' + cardData.last_4);
+          document.getElementById('square_card_type').value = cardData.card_brand;
+          document.getElementById('checkout_form_payment').submit();
+        }
+      },
+
+      paymentFormLoaded: function() {
+        // Fill in this callback to perform actions after the payment form is
+        // done loading (such as setting the postal code field programmatically).
+        paymentForm.setPostalCode('<%= @order.bill_address.zipcode %>');
+      }
+    }
+  });
+
+  $(function () {
+    if ($('#checkout_form_payment').length > 0) {
+      $('#checkout_form_payment').on('submit', function(event) {
+        debugger
+        if (!($('#use_existing_card_yes').val() === 'yes')) {
+          event.preventDefault();
+          return paymentForm.requestCardNonce();
+        }
+      });
+    }
+  });
+ </script>
+
+<div class="well clearfix">
+  <%= image_tag 'credit_cards/credit_card.gif', id: 'credit-card-image', class: 'pull-right', width: '170', height: '28' %>
+  <% param_prefix = "payment_source[#{payment_method.id}]" %>
+
+  <p class="field">
+    <%= label_tag "name_on_card_#{payment_method.id}" do %>
+        <%= Spree.t(:name_on_card) %><abbr class="required" title="required">*</abbr>
+    <% end %>
+    <%= text_field_tag "#{param_prefix}[name]", "#{@order.bill_address_firstname} #{@order.bill_address_lastname}", { id: "name_on_card_#{payment_method.id}", class: 'form-control required'} %>
+  </p>
+
+  <p class="field" data-hook="card_number">
+    <%= label_tag "card_number" do %>
+        <%= Spree.t(:card_number) %><abbr class="required" title="required">*</abbr>
+    <% end %>
+    <%= hidden_field_tag "#{param_prefix}[number]", '', id: 'square_card_number' %>
+    <!-- CREDIT CARD NUMBER -->
+    <div id="sq-card-number"></div>
+  </p>
+  <div class="row">
+    <div class="col-md-8 field" data-hook="card_expiration">
+      <%= label_tag "card_expiry" do %>
+          <%= Spree.t(:expiration) %><abbr class="required" title="required">*</abbr>
+      <% end %>
+
+      <!-- EXPIRATION DATA -->
+      <div id="sq-expiration-date"></div>
+      <%= hidden_field_tag "#{param_prefix}[expiry]", '', id: 'square_card_expiry' %>
+    </div>
+    <div class="col-md-4 field" data-hook="card_code">
+      <%= label_tag "card_code" do %>
+          <%= Spree.t(:card_code) %><abbr class="required" title="required">*</abbr>
+      <% end %>
+
+      <!-- CVV -->
+      <div id="sq-cvv"></div>
+      <%= hidden_field_tag "#{param_prefix}[verification_value]", '',  id: 'square_card_code' %>
+
+      <%= label_tag "zip_code" do %>
+          <%= Spree.t(:zip_code) %><abbr class="required" title="required">*</abbr>
+      <% end %>
+      <!-- ZIPCODE -->
+      <div id="sq-postal-code"></div>
+    </div>
+  </div>
+
+  <!-- CARD TYPE -->
+  <%= hidden_field_tag "#{param_prefix}[cc_type]", 0, id: 'square_card_type' %>
+  <!-- DON'T REQUIRE CARD NUMBER -->
+  <%= hidden_field_tag "#{param_prefix}[run_validations]", 0,   id: 'run_validations' %>
+  <!-- NONCE -->
+  <%= hidden_field_tag "#{param_prefix}[encrypted_data]", '',   id: 'card_nonce', class: 'nonce' %>
+</div>
