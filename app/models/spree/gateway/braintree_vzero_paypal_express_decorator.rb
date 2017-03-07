@@ -3,7 +3,6 @@ module Spree
 
     # This method will implement refund feature on cancel order action.
     def cancel(response_code)
-      provider
       transaction = ::Braintree::Transaction.find(response_code)
 
       ## From: https://www.braintreepayments.com/docs/ruby/transactions/refund
