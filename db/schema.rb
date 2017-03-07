@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170305172822) do
+ActiveRecord::Schema.define(version: 20170307210748) do
 
   create_table "friendly_id_slugs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "slug",                      null: false
@@ -416,7 +416,7 @@ ActiveRecord::Schema.define(version: 20170305172822) do
   end
 
   create_table "spree_products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name",                                       default: "",   null: false
+    t.string   "name",                                       default: "",    null: false
     t.text     "description",                  limit: 65535
     t.datetime "available_on"
     t.datetime "discontinue_on"
@@ -426,11 +426,12 @@ ActiveRecord::Schema.define(version: 20170305172822) do
     t.string   "meta_keywords"
     t.integer  "tax_category_id"
     t.integer  "shipping_category_id"
-    t.datetime "created_at",                                                null: false
-    t.datetime "updated_at",                                                null: false
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
     t.boolean  "promotionable",                              default: true
     t.string   "meta_title"
-    t.integer  "max_quantity_allowed_in_cart",               default: 0,    null: false
+    t.integer  "max_quantity_allowed_in_cart",               default: 0,     null: false
+    t.boolean  "gift_card",                                  default: false
     t.index ["available_on"], name: "index_spree_products_on_available_on", using: :btree
     t.index ["deleted_at"], name: "index_spree_products_on_deleted_at", using: :btree
     t.index ["discontinue_on"], name: "index_spree_products_on_discontinue_on", using: :btree
@@ -842,6 +843,7 @@ ActiveRecord::Schema.define(version: 20170305172822) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "position"
   end
 
   create_table "spree_store_credit_events", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -1066,6 +1068,31 @@ ActiveRecord::Schema.define(version: 20170305172822) do
     t.index ["sku"], name: "index_spree_variants_on_sku", using: :btree
     t.index ["tax_category_id"], name: "index_spree_variants_on_tax_category_id", using: :btree
     t.index ["track_inventory"], name: "index_spree_variants_on_track_inventory", using: :btree
+  end
+
+  create_table "spree_virtual_gift_cards", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "purchaser_id"
+    t.integer  "redeemer_id"
+    t.integer  "store_credit_id"
+    t.integer  "amount"
+    t.string   "currency"
+    t.string   "redemption_code"
+    t.datetime "redeemed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "line_item_id"
+    t.string   "recipient_name"
+    t.string   "recipient_email"
+    t.text     "gift_message",    limit: 65535
+    t.string   "purchaser_name"
+    t.boolean  "redeemable",                    default: false
+    t.datetime "send_email_at"
+    t.datetime "sent_at"
+    t.string   "locale"
+    t.index ["line_item_id"], name: "index_spree_virtual_gift_cards_on_line_item_id", using: :btree
+    t.index ["redeemed_at"], name: "index_spree_virtual_gift_cards_on_redeemed_at", using: :btree
+    t.index ["redemption_code"], name: "index_spree_virtual_gift_cards_on_redemption_code", using: :btree
+    t.index ["send_email_at"], name: "index_spree_virtual_gift_cards_on_send_email_at", using: :btree
   end
 
   create_table "spree_zone_members", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

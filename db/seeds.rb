@@ -9,3 +9,6 @@
 Spree::Core::Engine.load_seed if defined?(Spree::Core)
 Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
 Spree::Auth::Config.set('confirmable', false)
+
+
+SpreeStoreCredits::Engine.load_seed if defined?(SpreeStoreCredits::Engine)
