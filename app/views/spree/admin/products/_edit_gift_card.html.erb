@@ -1,0 +1,7 @@
+<div data-hook="edit_gift_card" class="col-md-4" style="padding-top: 20px;">
+  <%= f.field_container :gift_card, class: ['form-group'] do %>
+    <%= f.check_box(:gift_card) %>
+    <%= f.label :gift_card, I18n.t('spree.admin.gift_cards.gift_card'), style: 'cursor:pointer;' %>
+    <%= f.error_message_on :gift_card %>
+  <% end %>
+</div>
