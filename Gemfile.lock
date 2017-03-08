@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/billybones79/spree_store_credit_payment_method.git
-  revision: 205668533478b616a9d2f4e5adda468880ca1ddc
-  ref: 205668533478b616a9d2f4e5adda468880ca1ddc
-  specs:
-    spree_store_credits (3.0.0.beta)
-      spree_core (~> 3.0)
-
-GIT
   remote: git://github.com/spree-contrib/spree_active_shipping.git
   revision: 9586243b9b8a5950f1a365a8291611b375f3b0b9
   specs:
@@ -500,7 +492,6 @@ DEPENDENCIES
   spree_braintree_vzero!
   spree_gateway!
   spree_related_products!
-  spree_store_credits!
   spring
   spring-watcher-listen (~> 2.0.0)
   square_connect (~> 2.0.2)
