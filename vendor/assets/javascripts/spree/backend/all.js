@@ -10,4 +10,3 @@
 
 //= require_tree .
 //= require spree/backend/spree_braintree_vzero
-//= require spree/backend/spree_store_credits
