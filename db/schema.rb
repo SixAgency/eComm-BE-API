@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307210748) do
+ActiveRecord::Schema.define(version: 20170307210751) do
 
   create_table "friendly_id_slugs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "slug",                      null: false
@@ -1083,12 +1083,14 @@ ActiveRecord::Schema.define(version: 20170307210748) do
     t.integer  "line_item_id"
     t.string   "recipient_name"
     t.string   "recipient_email"
-    t.text     "gift_message",    limit: 65535
+    t.text     "gift_message",      limit: 65535
     t.string   "purchaser_name"
-    t.boolean  "redeemable",                    default: false
+    t.boolean  "redeemable",                      default: false
     t.datetime "send_email_at"
     t.datetime "sent_at"
     t.string   "locale"
+    t.datetime "deactivated_at"
+    t.integer  "inventory_unit_id"
     t.index ["line_item_id"], name: "index_spree_virtual_gift_cards_on_line_item_id", using: :btree
     t.index ["redeemed_at"], name: "index_spree_virtual_gift_cards_on_redeemed_at", using: :btree
     t.index ["redemption_code"], name: "index_spree_virtual_gift_cards_on_redemption_code", using: :btree
