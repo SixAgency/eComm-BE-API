@@ -31,8 +31,47 @@ Rails.application.routes.draw do
         resources :orders, only: [] do
           patch :calculate_shipping, on: :member
         end
+
+        resources :store_credit_events, only: [] do
+          collection do
+            get :mine
+          end
+        end
+
+        resources :gift_cards, only: [] do
+          collection do
+            post :redeem
+          end
+        end
       end
     end
+
+    namespace :admin do
+      resources :users, only: [] do
+
+        resources :gift_cards, only: [] do
+          collection do
+            get :lookup
+            post :redeem
+          end
+        end
+
+        collection do
+          resources :gift_cards, only: [:index, :show]
+        end
+      end
+
+      resources :orders, only: [] do
+        resources :gift_cards, only: [:edit, :update] do
+          member do
+            put :send_email
+            put :deactivate
+          end
+        end
+      end
+    end
+
+    post '/checkout/redeem', to: 'checkout#redeem'
   end
 
 end
