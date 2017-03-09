@@ -1,6 +1,7 @@
 module Spree
   module GiftCards::OrderContentsConcerns
     extend ActiveSupport::Concern
+    class GiftCardDateFormatError < StandardError; end
 
     included do
       prepend(InstanceMethods)
@@ -9,7 +10,7 @@ module Spree
     module InstanceMethods
       def add(variant, quantity = 1, options = {})
         line_item = super
-        create_gift_cards(line_item, quantity, options[:gift_card_details] || {})
+        create_gift_cards(line_item, quantity, options["gift_card_details"] || {})
         line_item
       end
 
@@ -23,11 +24,9 @@ module Spree
         update_success = super(params)
 
         if update_success && params[:line_items_attributes]
-          params[:line_items_attributes].each_pair do |id, value|
-            line_item = Spree::LineItem.find_by(id: value[:id])
-            new_quantity = value[:quantity].to_i
-            update_gift_cards(line_item, new_quantity)
-          end
+          line_item = Spree::LineItem.find_by(id: params[:line_items_attributes][:id])
+          new_quantity = params[:line_items_attributes][:quantity].to_i
+          update_gift_cards(line_item, new_quantity)
         end
 
         update_success
@@ -42,11 +41,10 @@ module Spree
                 amount: line_item.price,
                 currency: line_item.currency,
                 line_item: line_item,
-                locale: gift_card_details["locale"] || 'fr',
-                recipient_name: gift_card_details["recipient_name"] || "N/A",
-                recipient_email: gift_card_details["recipient_email"] || "N/A",
-                purchaser_name: gift_card_details["purchaser_name"] || "N/A",
-                gift_message: gift_card_details["gift_message"] || "N/A",
+                recipient_name: gift_card_details["recipient_name"],
+                recipient_email: gift_card_details["recipient_email"],
+                purchaser_name: gift_card_details["purchaser_name"],
+                gift_message: gift_card_details["gift_message"],
                 send_email_at: format_date(gift_card_details["send_email_at"])
             )
           end

@@ -1,4 +1,4 @@
-Spree::Order.send :include, OrderEmailDelivery
+Spree::Order.send :include, OrderEmailDelivery, Spree::GiftCards::OrderConcerns
 
 Spree::Order.class_eval do
   # guest orders are one time customers from Square's point of view.
@@ -6,4 +6,3 @@ Spree::Order.class_eval do
 
   def persist_user_address!; end
 end
-

@@ -1,23 +1,27 @@
-class Spree::VirtualGiftCard < ActiveRecord::Base
+class Spree::VirtualGiftCard < Spree::Base
   include ActionView::Helpers::NumberHelper
 
   belongs_to :store_credit, class_name: 'Spree::StoreCredit'
-  belongs_to :purchaser, class_name: Spree.user_class.to_s
-  belongs_to :redeemer, class_name: Spree.user_class.to_s
+  belongs_to :purchaser, class_name: 'Spree::User'
+  belongs_to :redeemer, class_name: 'Spree::User'
   belongs_to :line_item, class_name: 'Spree::LineItem'
-
-  before_create :set_redemption_code, if: -> { redemption_code.blank? }
-
+  belongs_to :inventory_unit, class_name: 'Spree::InventoryUnit'
   has_one :order, through: :line_item
 
   validates :amount, numericality: { greater_than: 0 }
   validates_uniqueness_of :redemption_code, conditions: -> { where(redeemed_at: nil, redeemable: true) }
   validates_presence_of :purchaser_id, if: Proc.new { |gc| gc.redeemable? }
-  validates_presence_of :line_item_id
 
   scope :unredeemed, -> { where(redeemed_at: nil) }
   scope :by_redemption_code, -> (redemption_code) { where(redemption_code: redemption_code) }
   scope :purchased, -> { where(redeemable: true) }
+
+  self.whitelisted_ransackable_associations = %w[line_item order]
+  self.whitelisted_ransackable_attributes = %w[redemption_code recipient_email sent_at send_email_at]
+
+  ransacker :sent_at do
+    Arel.sql('date(sent_at)')
+  end
 
   def redeemed?
     redeemed_at.present?
@@ -25,14 +29,6 @@ class Spree::VirtualGiftCard < ActiveRecord::Base
 
   def deactivated?
     deactivated_at.present?
-  end
-
-  def deactivate
-    update_attributes(redeemable: false, deactivated_at: Time.now)
-  end
-
-  def can_deactivate?
-    order.completed? && order.paid? && !deactivated?
   end
 
   def redeem(redeemer)
@@ -49,8 +45,21 @@ class Spree::VirtualGiftCard < ActiveRecord::Base
     self.update_attributes( redeemed_at: Time.now, redeemer: redeemer )
   end
 
-  ransacker :sent_at do
-    Arel.sql('date(sent_at)')
+  def make_redeemable!(purchaser:, inventory_unit:)
+    update_attributes!(redeemable: true, purchaser: purchaser, inventory_unit: inventory_unit, redemption_code: (self.redemption_code || generate_unique_redemption_code))
+  end
+
+  def deactivate
+    update_attributes(redeemable: false, deactivated_at: Time.now) &&
+        cancel_and_reimburse_inventory_unit
+  end
+
+  def can_deactivate?
+    order.completed? && order.paid? && !deactivated?
+  end
+
+  def memo
+    "Gift Card ##{self.redemption_code}"
   end
 
   def details
@@ -64,14 +73,6 @@ class Spree::VirtualGiftCard < ActiveRecord::Base
         send_email_at: send_email_at,
         formatted_send_email_at: formatted_send_email_at
     }
-  end
-
-  def make_redeemable!(purchaser:)
-    update_attributes!(redeemable: true, purchaser: purchaser, redemption_code: (self.redemption_code || generate_unique_redemption_code))
-  end
-
-  def memo
-    "Gift Card ##{self.redemption_code}"
   end
 
   def formatted_redemption_code
@@ -102,12 +103,6 @@ class Spree::VirtualGiftCard < ActiveRecord::Base
     deactivated_at.localtime.strftime("%F %I:%M%p") if deactivated_at
   end
 
-
-  def send_email
-    Spree::GiftCardMailer.gift_card_email(self).deliver_later
-    update_attributes!(sent_at: DateTime.now)
-  end
-
   def store_credit_category
     Spree::StoreCreditCategory.where(name: Spree::StoreCreditCategory::GIFT_CARD_CATEGORY_NAME).first
   end
@@ -116,10 +111,17 @@ class Spree::VirtualGiftCard < ActiveRecord::Base
     Spree::VirtualGiftCard.unredeemed.by_redemption_code(redemption_code).first
   end
 
+  def send_email
+    Spree::GiftCardMailer.gift_card_email(self).deliver_later
+    update_attributes!(sent_at: DateTime.now)
+  end
+
   private
 
-  def set_redemption_code
-    self.redemption_code = generate_unique_redemption_code
+  def cancel_and_reimburse_inventory_unit
+    cancellation = Spree::OrderCancellations.new(line_item.order)
+    cancellation.cancel_unit(inventory_unit)
+    !!cancellation.reimburse_units([inventory_unit])
   end
 
   def generate_unique_redemption_code
