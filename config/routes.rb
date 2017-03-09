@@ -48,7 +48,6 @@ Rails.application.routes.draw do
 
     namespace :admin do
       resources :users, only: [] do
-
         resources :gift_cards, only: [] do
           collection do
             get :lookup
@@ -57,7 +56,7 @@ Rails.application.routes.draw do
         end
 
         collection do
-          resources :gift_cards, only: [:index, :show]
+          resources :gift_cards, only: [:index]
         end
       end
 
@@ -70,8 +69,6 @@ Rails.application.routes.draw do
         end
       end
     end
-
-    post '/checkout/redeem', to: 'checkout#redeem'
   end
 
 end
