@@ -1,5 +1,3 @@
-Spree::LineItem.include(Spree::LineItemDecorator)
-
 module Spree::LineItemDecorator
   def self.included(base)
     base.has_many :gift_cards, class_name: Spree::VirtualGiftCard, dependent: :destroy
@@ -18,3 +16,5 @@ module Spree::LineItemDecorator
     end
   end
 end
+
+Spree::LineItem.include(Spree::LineItemDecorator)
