@@ -23,6 +23,7 @@ module ActiveMerchant
       attr_reader :card_api,
                   :transaction_api,
                   :customer_api,
+                  :refund_api,
                   :location_id,
                   :preferences
 
@@ -31,6 +32,7 @@ module ActiveMerchant
         @card_api         = SquareConnect::CustomerCardApi.new
         @transaction_api  = SquareConnect::TransactionApi.new
         @customer_api     = SquareConnect::CustomerApi
+        @refund_api       = SquareConnect::RefundApi.new
       end
 
       #
@@ -53,16 +55,24 @@ module ActiveMerchant
         transaction { charge(cent_amount: money, card: card, delay_charge: false, **options.slice(:email, :currency)) }
       end
 
-      def credit(money, credit_card_or_vault_id, options = {})
-        raise NotImplementedError
+      def credit(money, card, transaction_id, options = {})
+        refund(money, card, transaction_id, options)
       end
 
-      def refund(money, transaction_id, options = {})
-        raise NotImplementedError
+      def refund(money, card, transaction_id, options = {})
+        originator = options[:originator]
+        transaction do
+          refund_api.create_refund(preferences[:access_token], location_id, transaction_id, {
+              amount_money:    { amount: money, currency: originator.payment.currency },
+              idempotency_key: SecureRandom.uuid,
+              tender_id:       get_tender_id(transaction_id),
+              reason:          originator.reason.name
+          })
+        end
       end
 
-      def void(authorization, options = {})
-        transaction { transaction_api.void_transaction(preferences[:access_token], location_id, authorization) }
+      def void(transaction_id, card, options = {})
+        transaction { transaction_api.void_transaction(preferences[:access_token], location_id, transaction_id) }
       end
 
       def verify(card, options = {})
@@ -215,12 +225,18 @@ module ActiveMerchant
         return square_customer
       end
 
+      def get_tender_id(transaction_id)
+        response = transaction_api.retrieve_transaction(preferences[:access_token], location_id, transaction_id)
+        response.transaction.tenders.first.id
+      end
+
       def location_id
         @location_id = begin
           location_api = SquareConnect::LocationApi.new
           location_api.list_locations(preferences[:access_token]).locations.first.id
         end
       end
+
     end
   end
 end
