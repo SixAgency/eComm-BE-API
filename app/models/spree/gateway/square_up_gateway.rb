@@ -21,6 +21,17 @@ module Spree
       true
     end
 
+    #
+    # Cancel the payment
+    #
+    # If the payment was not captured, void it.
+    # If it was captured refunds all the money.
+    #
+    def cancel(trasaction_id)
+      response = provider.void(trasaction_id, nil)
+      provider.refund(nil, nil, trasaction_id, {refund_all: true}) unless response.success?
+    end
+
     def create_customer(payment)
       provider.customer(payment.source, order: payment.order)
     end

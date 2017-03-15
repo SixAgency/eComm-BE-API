@@ -59,15 +59,24 @@ module ActiveMerchant
         refund(money, card, transaction_id, options)
       end
 
+      #
+      # Refund the payment
+      #
+      # If the +refund_all+ key is set in the +options+ paramater refunds all the money,
+      # otherwise refunds the amount specified in the +money+ paramater
+      #
+      # It does't support split tenders (https://squareup.com/help/us/en/article/5097-process-split-tender-payments-with-square).
+      #
       def refund(money, card, transaction_id, options = {})
-        originator = options[:originator]
-        transaction do
-          refund_api.create_refund(preferences[:access_token], location_id, transaction_id, {
-              amount_money:    { amount: money, currency: originator.payment.currency },
-              idempotency_key: SecureRandom.uuid,
-              tender_id:       get_tender_id(transaction_id),
-              reason:          originator.reason.name
-          })
+        if options[:refund_all].present?
+          transaction { refund_all(transaction_id) }
+        else
+          transaction do
+            refund_amount cent_amount: money,
+                          currency: options[:originator].payment.currency,
+                          transaction_id: transaction_id,
+                          reason: options[:originator].reason.name
+          end
         end
       end
 
@@ -225,9 +234,47 @@ module ActiveMerchant
         return square_customer
       end
 
-      def get_tender_id(transaction_id)
+      def refund_amount(cent_amount:, currency:, transaction_id:, reason: nil)
+        refund_api.create_refund(preferences[:access_token], location_id, transaction_id, {
+            amount_money:    { amount: cent_amount, currency: currency },
+            idempotency_key: SecureRandom.uuid,
+            tender_id:       fetch_tender(transaction_id).id,
+            reason:          reason
+        })
+      end
+
+      def refund_all(transaction_id)
+        transaction = fetch_transaction(transaction_id)
+        tender = transaction.tenders.first
+
+        #
+        # Calcutates the already refunded amount
+        #
+        refunded_amount = transaction.refunds.reduce(0) do |sum, refund|
+          sum + (refund.tender_id == tender.id ? refund.amount_money.amount : 0)
+        end
+
+        amount = tender.amount_money.amount - refunded_amount
+
+        if amount > 0
+          refund_amount cent_amount: amount,
+                        currency: tender.amount_money.currency,
+                        transaction_id: transaction.id
+        else
+          #
+          # No refund is needed
+          #
+          transaction
+        end
+      end
+
+      def fetch_transaction(transaction_id)
         response = transaction_api.retrieve_transaction(preferences[:access_token], location_id, transaction_id)
-        response.transaction.tenders.first.id
+        response.transaction
+      end
+
+      def fetch_tender(transaction_id)
+        fetch_transaction(transaction_id).tenders.first
       end
 
       def location_id
