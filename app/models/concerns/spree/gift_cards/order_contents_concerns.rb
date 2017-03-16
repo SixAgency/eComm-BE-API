@@ -1,6 +1,7 @@
 module Spree
   module GiftCards::OrderContentsConcerns
     extend ActiveSupport::Concern
+
     class GiftCardDateFormatError < StandardError; end
 
     included do
@@ -24,9 +25,11 @@ module Spree
         update_success = super(params)
 
         if update_success && params[:line_items_attributes]
-          line_item = Spree::LineItem.find_by(id: params[:line_items_attributes][:id])
-          new_quantity = params[:line_items_attributes][:quantity].to_i
-          update_gift_cards(line_item, new_quantity)
+          params[:line_items_attributes].each_pair do |id, value|
+            line_item = Spree::LineItem.find_by(id: value[:id])
+            new_quantity = value[:quantity].to_i
+            update_gift_cards(line_item, new_quantity)
+          end
         end
 
         update_success
