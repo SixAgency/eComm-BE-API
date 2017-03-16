@@ -55,6 +55,10 @@ class Spree::Admin::GiftCardsController < Spree::Admin::BaseController
 
   private
 
+  def gift_card_params
+    params.require(:virtual_gift_card).permit(:recipient_name, :recipient_email, :purchaser_name, :gift_message, :send_email_at)
+  end
+
   def load_gift_card_for_redemption
     redemption_code = Spree::RedemptionCodeGenerator.format_redemption_code_for_lookup(params[:gift_card][:redemption_code])
     @gift_card = Spree::VirtualGiftCard.active_by_redemption_code(redemption_code)
@@ -75,10 +79,6 @@ class Spree::Admin::GiftCardsController < Spree::Admin::BaseController
 
   def load_user
     @user = Spree::User.find(params[:user_id])
-  end
-
-  def gift_card_params
-    params.require(:virtual_gift_card).permit(:recipient_name, :recipient_email, :purchaser_name, :gift_message, :send_email_at)
   end
 
   def model_class
