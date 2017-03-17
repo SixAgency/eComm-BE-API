@@ -1,0 +1,13 @@
+<% if order.using_store_credit? %>
+    <tr data-hook="order_details_store_credit">
+      <td><%= Spree.t( Spree::StoreCredit.model_name.human ) %>:</td>
+      <td><span id='summary-store-credit'><%= order.display_total_applied_store_credit.to_html %></span></td>
+    </tr>
+
+    <% unless order.covered_by_store_credit? %>
+        <tr data-hook="order_details_balance_due">
+          <td><strong><%= Spree.t(:balance_due) %>:</strong></td>
+          <td><strong><span id='summary-balance-due'><%= order.display_order_total_after_store_credit.to_html %></span></strong></td>
+        </tr>
+    <% end %>
+<% end %>

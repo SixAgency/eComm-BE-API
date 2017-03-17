@@ -137,7 +137,7 @@ class Spree::VirtualGiftCard < Spree::Base
   def duplicate_redemption_code?(redemption_code)
     Spree::VirtualGiftCard.active_by_redemption_code(redemption_code)
   end
-  
+
   def cancel_and_reimburse_inventory_unit
     cancellation = Spree::OrderCancellations.new(line_item.order)
     cancellation.cancel_unit(inventory_unit)

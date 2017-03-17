@@ -1,0 +1,79 @@
+<% if @order.could_use_store_credit? %>
+
+    <div class="dashed_border for_button">
+      <div class="btn_payment_card"><a class="button medium outline">Add gift card</a></div>
+      <br>
+      <div class="column large coupon__block">
+        <label><%= "Gift card : #{@order.display_total_available_store_credit}" %></label>
+        <p class="field checkbox" data-hook="use_billing">
+          <%= check_box_tag "apply_store_credit", '1', 0 %>
+          <label id="order_use_store_credit" class="custom-checkbox" for="apply_store_credit">
+            <span></span>
+            <%=  Spree.t('store_credit.apply') %>
+          </label>
+        </p>
+      </div>
+    </div>
+<% end %>
+
+<div id="gift_card_usage">
+  <%= link_to Spree.t('gift_cards.redeem_gift_card'), 'javascript:void(0);', id: 'use_gift_card' %>
+  <p id="gift_card_fields" class="field" style="display: none">
+    <%= text_field_tag 'redemption_code', nil, {size: 19, maxlength: 19, placeholder: Spree.t('gift_cards.redemption_code')} %>
+    <%= button_tag Spree.t('gift_cards.redeem'), name: 'redeem_gift_card', class: 'continue btn btn-lg btn-primary', id: 'redeem_gift_card' %>
+  </p>
+  <p class="message" style="display: none;"></p>
+</div>
+
+
+<script>
+    Spree.redeemGiftCard = function() {
+        var redemption_code = $("#redemption_code").val().trim();
+        var data = {'redemption_code': redemption_code};
+        if (redemption_code == '') {
+            Spree.handleMessage('error', 'Gift Card Code can not be blank.');
+            return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url: "redeem",
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+                console.log(data);
+                if (data.status == 'success') {
+                    window.location.reload();
+                }
+            },
+            error: function (data) {
+                data = $.parseJSON(data.responseText);
+                Spree.handleMessage('error', data.error_message);
+            }
+        });
+    };
+
+    Spree.handleMessage = function(status, message) {
+        var selector = $('.message');
+        console.log(message);
+        selector.attr('style', '').html('');
+        if (status == 'success') {
+            selector.attr('style', 'color:green;');
+        } else if (status == 'error') {
+            selector.attr('style', 'color:red;');
+        }
+
+        selector.html(message).show().fadeOut(1000);
+    };
+
+    $(document).ready(function() {
+
+        $('a#use_gift_card').click(function() {
+            $('#gift_card_fields').toggle();
+        });
+
+        $('#redeem_gift_card').click(function(e) {
+            e.preventDefault();
+            Spree.redeemGiftCard();
+        });
+    });
+</script>

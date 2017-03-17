@@ -1,0 +1,5 @@
+<% if @user.total_available_store_credit > 0 %>
+    <h3>Total available store credit: <%= Spree::Money.new(@user.total_available_store_credit) %>.</h3>
+<% else %>
+    <h3>You have no available store credit.</h3>
+<% end %>
