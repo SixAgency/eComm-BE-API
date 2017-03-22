@@ -1,0 +1,1 @@
+Spree::CheckoutController.send :include, CheckoutVirtualGift
