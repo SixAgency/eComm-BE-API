@@ -23,6 +23,7 @@ module ActiveMerchant
       attr_reader :card_api,
                   :transaction_api,
                   :customer_api,
+                  :refund_api,
                   :location_id,
                   :preferences
 
@@ -31,6 +32,7 @@ module ActiveMerchant
         @card_api         = SquareConnect::CustomerCardApi.new
         @transaction_api  = SquareConnect::TransactionApi.new
         @customer_api     = SquareConnect::CustomerApi
+        @refund_api       = SquareConnect::RefundApi.new
       end
 
       #
@@ -53,16 +55,33 @@ module ActiveMerchant
         transaction { charge(cent_amount: money, card: card, delay_charge: false, **options.slice(:email, :currency)) }
       end
 
-      def credit(money, credit_card_or_vault_id, options = {})
-        raise NotImplementedError
+      def credit(money, card, transaction_id, options = {})
+        refund(money, card, transaction_id, options)
       end
 
-      def refund(money, transaction_id, options = {})
-        raise NotImplementedError
+      #
+      # Refund the payment
+      #
+      # If the +refund_all+ key is set in the +options+ paramater refunds all the money,
+      # otherwise refunds the amount specified in the +money+ paramater
+      #
+      # It does't support split tenders (https://squareup.com/help/us/en/article/5097-process-split-tender-payments-with-square).
+      #
+      def refund(money, card, transaction_id, options = {})
+        if options[:refund_all].present?
+          transaction { refund_all(transaction_id) }
+        else
+          transaction do
+            refund_amount cent_amount: money,
+                          currency: options[:originator].payment.currency,
+                          transaction_id: transaction_id,
+                          reason: options[:originator].reason.name
+          end
+        end
       end
 
-      def void(authorization, options = {})
-        transaction { transaction_api.void_transaction(preferences[:access_token], location_id, authorization) }
+      def void(transaction_id, card, options = {})
+        transaction { transaction_api.void_transaction(preferences[:access_token], location_id, transaction_id) }
       end
 
       def verify(card, options = {})
@@ -215,12 +234,56 @@ module ActiveMerchant
         return square_customer
       end
 
+      def refund_amount(cent_amount:, currency:, transaction_id:, reason: nil)
+        refund_api.create_refund(preferences[:access_token], location_id, transaction_id, {
+            amount_money:    { amount: cent_amount, currency: currency },
+            idempotency_key: SecureRandom.uuid,
+            tender_id:       fetch_tender(transaction_id).id,
+            reason:          reason
+        })
+      end
+
+      def refund_all(transaction_id)
+        transaction = fetch_transaction(transaction_id)
+        tender = transaction.tenders.first
+
+        #
+        # Calcutates the already refunded amount
+        #
+        refunded_amount = transaction.refunds.reduce(0) do |sum, refund|
+          sum + (refund.tender_id == tender.id ? refund.amount_money.amount : 0)
+        end
+
+        amount = tender.amount_money.amount - refunded_amount
+
+        if amount > 0
+          refund_amount cent_amount: amount,
+                        currency: tender.amount_money.currency,
+                        transaction_id: transaction.id
+        else
+          #
+          # No refund is needed
+          #
+          transaction
+        end
+      end
+
+      def fetch_transaction(transaction_id)
+        response = transaction_api.retrieve_transaction(preferences[:access_token], location_id, transaction_id)
+        response.transaction
+      end
+
+      def fetch_tender(transaction_id)
+        fetch_transaction(transaction_id).tenders.first
+      end
+
       def location_id
         @location_id = begin
           location_api = SquareConnect::LocationApi.new
           location_api.list_locations(preferences[:access_token]).locations.first.id
         end
       end
+
     end
   end
 end
