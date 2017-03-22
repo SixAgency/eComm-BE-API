@@ -7,7 +7,6 @@ module Spree
         load_and_authorize_resource :class => Address, except: [:index, :create]
 
         before_action :resource, only: [:show, :update, :destroy]
-        before_action :set_current_user_to_address_model, only: [:create, :update]
 
         ADDRESS_TYPE = %w(bill ship)
 
@@ -145,11 +144,6 @@ module Spree
           end
 
           current_api_user.save if must_save
-        end
-
-        def set_current_user_to_address_model
-          # need for validation
-          Spree::Address::set_current_api_user(current_api_user)
         end
       end
     end

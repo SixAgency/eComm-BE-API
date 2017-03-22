@@ -57,8 +57,6 @@ module CheckoutAddresses
   end
 
   def address_created?(type)
-    Spree::Address::set_current_api_user(current_api_user)
-
     @created_address = Spree::Address
                                  .where(address_params(type)["#{type}_address_attributes"].except('id', 'updated_at', 'created_at'))
                                  .where(user_id: current_api_user.id).first
