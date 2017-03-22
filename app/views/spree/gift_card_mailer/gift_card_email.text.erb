@@ -1,4 +1,6 @@
-<%= Spree.t('gift_card_mailer.gift_card_email.dear_customer') %>
+<%= Spree.t('gift_card_mailer.gift_card_email.dear_customer') %> <%= @gift_card.recipient_name.presence %>
+
+<%= @gift_card.gift_message.presence %>
 
 <%= Spree.t('gift_card_mailer.gift_card_email.your_gift_card_code') %>
 

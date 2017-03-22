@@ -73,7 +73,7 @@ module Spree
 
       def format_date(date)
         return date if date.acts_like?(:date) || date.acts_like?(:time)
-        return Date.today if date.nil?
+        return Time.now.utc if date.nil?
 
         begin
           Date.parse(date)
