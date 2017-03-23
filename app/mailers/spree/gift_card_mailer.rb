@@ -1,4 +1,6 @@
 class Spree::GiftCardMailer < Spree::BaseMailer
+  layout 'spree/base_mailer'
+
   def gift_card_email(gift_card)
     @gift_card = gift_card.respond_to?(:id) ? gift_card : Spree::VirtualGiftCard.find(gift_card)
     @order = @gift_card.line_item.order

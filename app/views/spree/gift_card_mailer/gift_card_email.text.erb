@@ -1,9 +1,10 @@
-<%= Spree.t('gift_card_mailer.gift_card_email.dear_customer') %> <%= @gift_card.recipient_name.presence %>
+<%= Spree.t('gift_card_mailer.gift_card_email.received_gift_card_from', recipient_name: @gift_card.recipient_name ) %>
+<%= Spree.t('gift_card_mailer.gift_card_email.shop_at') %> <a href="<%= root_url %>" target="_blank">krissorbie.com</a>
 
-<%= @gift_card.gift_message.presence %>
+<%= Spree.t('spree.gift_card_mailer.gift_card_email.message') %>:
+<%= @gift_card.gift_message %>
 
-<%= Spree.t('gift_card_mailer.gift_card_email.your_gift_card_code') %>
+<%= Spree.t('spree.gift_card_mailer.gift_card_email.amount') %>: $<%= number_with_precision(@gift_card.amount, precision: 2) %>
+<%= Spree.t('gift_card_mailer.gift_card_email.your_gift_card_code') %>: <%= @gift_card.redemption_code %>
 
-============================================================
-<%= Spree.t('gift_card_mailer.gift_card_email.gift_card_code', code: @gift_card.redemption_code) %>
-============================================================
+<a href="<%= root_url %>" target="_blank"><%= Spree.t('spree.gift_card_mailer.gift_card_email.shop_now') %></a>

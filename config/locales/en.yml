@@ -51,7 +51,12 @@ en:
     gift_card_mailer:
       gift_card_email:
         dear_customer: "Dear customer"
-        your_gift_card_code: "Here is your gift card code"
+        your_gift_card_code: "Your Gift Card code"
         gift_card_code: "Gift card code: %{code}"
-        subject: "Your gift card code"
+        subject: "You have received a gift card"
+        received_gift_card_from: "You have received a gift card from %{recipient_name}"
+        shop_at: "Please shop online at"
+        amount: "Amount"
+        shop_now: "Shop Now"
+        message: "Message from buyer"
     listing_gift_cards: "Listing Gift Cards"
