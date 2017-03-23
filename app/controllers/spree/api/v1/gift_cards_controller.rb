@@ -2,6 +2,7 @@ module Spree
   module Api
     module V1
       class GiftCardsController < Spree::Api::BaseController
+        before_action :remove_anonymous_user
 
         def redeem
           redemption_code = Spree::RedemptionCodeGenerator.format_redemption_code_for_lookup(params[:redemption_code] || "")
@@ -20,8 +21,12 @@ module Spree
 
         def redeem_fail_response
           {
-              error_message: "#{Spree.t('admin.gift_cards.errors.not_found')}. #{Spree.t('admin.gift_cards.errors.please_try_again')}"
+              exception: "#{Spree.t('admin.gift_cards.errors.not_found')}. #{Spree.t('admin.gift_cards.errors.please_try_again')}"
           }
+        end
+
+        def remove_anonymous_user
+          @current_api_user = nil if !@current_api_user.nil? && @current_api_user.id.nil?
         end
       end
     end
