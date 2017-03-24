@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/CleverSoftwareSolutions/spree_reviews.git
+  revision: 6d1ccd600e9ab08891274e89302f85622ad073c0
+  ref: 6d1ccd6
+  specs:
+    spree_reviews (3.2.0.alpha)
+      spree_auth_devise (>= 3.1.0, < 4.0)
+      spree_core (>= 3.1.0, < 4.0)
+
+GIT
   remote: git://github.com/spree-contrib/spree_active_shipping.git
   revision: 9586243b9b8a5950f1a365a8291611b375f3b0b9
   specs:
@@ -492,6 +501,7 @@ DEPENDENCIES
   spree_braintree_vzero!
   spree_gateway!
   spree_related_products!
+  spree_reviews!
   spring
   spring-watcher-listen (~> 2.0.0)
   square_connect (~> 2.0.2)
