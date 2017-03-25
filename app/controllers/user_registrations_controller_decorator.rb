@@ -6,6 +6,8 @@ Spree::UserRegistrationsController.class_eval do
     resource_saved = resource.save
     yield resource if block_given?
     if resource_saved
+      Spree::UserMailer.create_active_user(resource, spree_user_params[:password]).deliver_later
+
       if resource.active_for_authentication?
         sign_up(resource_name, resource)
         session[:spree_user_signup] = true
@@ -19,11 +21,11 @@ Spree::UserRegistrationsController.class_eval do
           format.html do
             respond_with resource, location: after_sign_up_path_for(resource)
           end
-
         end
       else
         set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}"
         expire_data_after_sign_in!
+
         respond_to do |format|
           format.json {
             render :json => {:message => "You have signed up successfully but the user is inactive for the moment"}

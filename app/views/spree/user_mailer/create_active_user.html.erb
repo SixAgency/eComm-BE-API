@@ -1,0 +1,11 @@
+<p><%= t 'hello' %> <%= @user.email %>,</p>
+<p><%= Spree.t('user_mailer.create_active_user_email.tanks_here_your_password', site_name: @store.name) %></p>
+<p>
+  <%= t 'email' %>: <%= @user.email %><br/>
+  <%= t 'password' %>: <%= @password %>
+</p>
+<p><%= t 'start_and_support_message', site_name: @store.name %></p>
+<p>
+  <%= t 'thanks' %>,<br/>
+  <%= t 'site_name_team', site_name: @store.name %>
+</p>
