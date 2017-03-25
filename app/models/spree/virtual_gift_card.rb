@@ -49,6 +49,7 @@ class Spree::VirtualGiftCard < Spree::Base
                              action_originator: self,
                              category: store_credit_category,
                          })
+    send_redeem_email
     self.update_attributes( redeemed_at: Time.now, redeemer: redeemer )
   end
 
@@ -108,6 +109,10 @@ class Spree::VirtualGiftCard < Spree::Base
   def send_email
     Spree::GiftCardMailer.gift_card_email(self).deliver_later
     update_attributes!(sent_at: DateTime.now)
+  end
+
+  def send_redeem_email
+    Spree::GiftCardMailer.gift_redeemed_email(self).deliver_later
   end
 
   def store_credit_category

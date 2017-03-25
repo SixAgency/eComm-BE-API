@@ -59,4 +59,9 @@ en:
         amount: "Amount"
         shop_now: "Shop Now"
         message: "Message from buyer"
+      gift_card_redeem_email:
+        subject: "Gift card send to %{recipient_name} was redeeming"
+        gift_redeemed_at: "Gift card bought on order number %{order_number} and send to %{recipient_name} was redeeming"
+        visit_us: "Visit Us"
+        check_new_products: "Check new products on"
     listing_gift_cards: "Listing Gift Cards"

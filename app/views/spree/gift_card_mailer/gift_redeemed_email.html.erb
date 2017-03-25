@@ -1,6 +1,5 @@
-<p style="margin:0 0 16px"><%= Spree.t('gift_card_mailer.gift_card_email.received_gift_card_from', recipient_name: @gift_card.recipient_name ) %>. <%= Spree.t('gift_card_mailer.gift_card_email.shop_at') %> <a href="<%= root_url %>" target="_blank">krissorbie.com</a></p>
-<p style="margin:0 0 16px"><%= Spree.t('spree.gift_card_mailer.gift_card_email.message') %>:</p>
-<p style="margin:0 0 16px"><%= @gift_card.gift_message %></p>
+<p style="margin:0 0 16px"><%= Spree.t('gift_card_mailer.gift_card_redeem_email.gift_redeemed_at', {order_number: @order.number, recipient_name: @gift_card.recipient_name} ) %>. <%= Spree.t('gift_card_mailer.gift_card_redeem_email.check_new_products') %> <a href="<%= root_url %>" target="_blank">krissorbie.com</a></p>
+
 <div>
   <div style="clear:both;max-width:500px;margin:0 auto;margin-bottom:15px;border:5px solid #f7f4f4;padding:5px">
     <div style="max-width:100%;height:auto;margin:0 auto;display:block">
@@ -16,18 +15,11 @@
         <span>$<%= number_with_precision(@gift_card.amount, precision: 2) %></span>
       </div>
     </div>
-    <div style="padding:10px;color:#9b9b9b;text-align:center;border-top:1px solid #e6e6e6;border-bottom:1px solid #e6e6e6">
-      <%= Spree.t('gift_card_mailer.gift_card_email.your_gift_card_code') %>:
-      <span style="font-weight:bold;display:block;font-size:18px"><%= @gift_card.redemption_code %></span>
-    </div>
-    <div style="clear:both;min-height:70px;padding:10px;text-align:center;color:#535353;font-weight:600;vertical-align:middle;display:inline-block;width:100%;font-size:12px;white-space:pre-wrap">
-      <%= @gift_card.recipient_name %>
-    </div>
   </div>
 </div>
 
 <div style="margin:0 auto;margin-bottom:15px;text-align:center">
-  <a href="<%= root_url %>" style="color:#1adab1;font-weight:normal;text-decoration:underline;margin:0 auto;margin-bottom:15px;text-align:center" target="_blank"><%= Spree.t('gift_card_mailer.gift_card_email.shop_now') %></a>
+  <a href="<%= root_url %>" style="color:#1adab1;font-weight:normal;text-decoration:underline;margin:0 auto;margin-bottom:15px;text-align:center" target="_blank"><%= Spree.t('gift_card_mailer.gift_card_redeem_email.visit_us') %></a>
 </div>
 
 
