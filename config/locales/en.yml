@@ -74,3 +74,7 @@ en:
         subject: "Welcome to %{site_name}"
         tanks_here_your_password: "Thank you for signing up on %{site_name}. Here is your email and password."
     listing_gift_cards: "Listing Gift Cards"
+    order_mailer:
+      refund_email:
+        subject: "Refund from %{site_name}"
+        intro_message: "Thank you for shopping online with us. We have refunded your order. We will send you an additional note if this refund was not done at your request."
