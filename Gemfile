@@ -23,6 +23,8 @@ gem 'rack-cors', :require => 'rack/cors'            # Middleware that will make 
 gem 'jquery-rails'                                  # Use jquery as the JavaScript library
 gem 'turbolinks', '~> 5'                            # Turbolinks makes navigating your web application faster.
 gem 'jbuilder', '~> 2.5'                            # Build JSON APIs with ease.
+gem 'delayed_job_active_record'                     # Running background jobs
+gem 'daemons'                                       # Dependency of Delayed jobs managment script.
 
 group :development, :test do
   gem 'byebug', platform: :mri                      # Stop execution and get a debugger console

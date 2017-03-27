@@ -76,9 +76,17 @@ namespace :deploy do
     end
   end
 
+  desc 'Restart delayed jobs'
+  task :restart_delayed_job do
+    on roles(:app) do
+      execute 'bin/delayed_job restart'
+    end
+  end
+
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
   after  :finishing,    :restart
+  after  :finishing,    :restart_delayed_job
 
   namespace :db do
     desc 'reset database'
