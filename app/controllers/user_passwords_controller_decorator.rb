@@ -15,7 +15,7 @@ Spree::UserPasswordsController.class_eval do
 
       respond_to do |format|
         format.json {
-          render :json => { message: 'Reset password instructions was send', user: {email: resource.email} }
+          render :json => { message: 'Reset password instructions have been sent', user: {email: resource.email} }
         }
 
         format.html {
