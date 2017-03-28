@@ -44,6 +44,7 @@ group :development do
   gem 'capistrano3-puma'
   gem 'capistrano-upload-config'
   gem 'capistrano-linked-files'
+  gem 'capistrano3-delayed-job', '~> 1.0'
 end
 
 group :test do

@@ -69,37 +69,8 @@ namespace :deploy do
     end
   end
 
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      invoke 'puma:restart'
-    end
-  end
-
-  desc 'Restart delayed jobs'
-  task :restart_delayed_job do
-    on roles(:app) do
-      execute 'bin/delayed_job restart'
-    end
-  end
-
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
-  after  :finishing,    :restart
-  after  :finishing,    :restart_delayed_job
-
-  namespace :db do
-    desc 'reset database'
-    task :reset do
-      on roles(:db) do
-        within release_path do
-          with rails_env: fetch(:rails_env) do
-            execute :rake, "db:reset"
-          end
-        end
-      end
-    end
-  end
 end
 
 

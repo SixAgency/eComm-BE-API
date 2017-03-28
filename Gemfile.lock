@@ -205,6 +205,9 @@ GEM
       sshkit (~> 1.2)
     capistrano-upload-config (0.7.0)
       capistrano (>= 3.0)
+    capistrano3-delayed-job (1.7.3)
+      capistrano (~> 3.0, >= 3.0.0)
+      daemons (~> 1.2.4)
     capistrano3-puma (1.2.1)
       capistrano (~> 3.0)
       puma (>= 2.6)
@@ -489,6 +492,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   capistrano-upload-config
+  capistrano3-delayed-job (~> 1.0)
   capistrano3-puma
   coffee-rails (~> 4.2)
   daemons
