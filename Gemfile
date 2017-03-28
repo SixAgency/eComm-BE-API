@@ -43,6 +43,7 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma'
   gem 'capistrano-upload-config'
+  gem 'capistrano-linked-files'
 end
 
 group :test do
