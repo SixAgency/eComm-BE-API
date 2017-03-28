@@ -3,7 +3,6 @@ module Spree
 
     preference :access_token,   :string
     preference :application_id, :string
-    preference :auto_capture,   :boolean
 
     def provider_class
       ActiveMerchant::Billing::SquareUp
@@ -11,10 +10,6 @@ module Spree
 
     def method_type
       'square_up'
-    end
-
-    def auto_capture?
-      preferences[:auto_capture]
     end
 
     def payment_profiles_supported?
@@ -27,9 +22,9 @@ module Spree
     # If the payment was not captured, void it.
     # If it was captured refunds all the money.
     #
-    def cancel(trasaction_id)
-      response = provider.void(trasaction_id, nil)
-      provider.refund(nil, nil, trasaction_id, {refund_all: true}) unless response.success?
+    def cancel(transaction_id)
+      response = provider.void(transaction_id, nil)
+      provider.refund(nil, nil, transaction_id, {refund_all: true}) unless response.success?
     end
 
     def create_customer(payment)
