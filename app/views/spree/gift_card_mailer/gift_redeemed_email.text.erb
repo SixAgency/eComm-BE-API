@@ -1,0 +1,6 @@
+<%= Spree.t('gift_card_mailer.gift_card_redeem_email.gift_redeemed_at', {order_number: @order.number, recipient_name: @gift_card.recipient_name} ) %>.
+<%= Spree.t('gift_card_mailer.gift_card_redeem_email.check_new_products') %> <a href="<%= root_url %>" target="_blank">krissorbie.com</a>.
+
+<%= Spree.t('gift_card_mailer.gift_card_email.amount') %>: $<%= number_with_precision(@gift_card.amount, precision: 2) %>
+
+<a href="<%= root_url %>" target="_blank"><%= Spree.t('gift_card_mailer.gift_card_redeem_email.visit_us') %></a>

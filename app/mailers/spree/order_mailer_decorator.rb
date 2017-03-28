@@ -1,3 +1,5 @@
+Spree::OrderMailer.send :include, Spree::OrderMailerRefund
+
 Spree::OrderMailer.class_eval do
   def confirm_email(order, resend=false, to_internal=false)
     @order = order.respond_to?(:id) ? order : Spree::Order.find(order)

@@ -20,7 +20,12 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  hello: "Hello"
+  email: "Email"
+  password: "Password"
+  thanks: "Thanks"
+  site_name_team: "%{site_name} team"
+  start_and_support_message: "A good place to get started on %{site_name} is our shop section. For help and customer support you can always send us a message from contact section."
 
   spree:
     admin:
@@ -51,7 +56,25 @@ en:
     gift_card_mailer:
       gift_card_email:
         dear_customer: "Dear customer"
-        your_gift_card_code: "Here is your gift card code"
+        your_gift_card_code: "Your Gift Card code"
         gift_card_code: "Gift card code: %{code}"
-        subject: "Your gift card code"
+        subject: "You have received a gift card"
+        received_gift_card_from: "You have received a gift card from %{recipient_name}"
+        shop_at: "Please shop online at"
+        amount: "Amount"
+        shop_now: "Shop Now"
+        message: "Message from buyer"
+      gift_card_redeem_email:
+        subject: "Gift card send to %{recipient_name} was redeeming"
+        gift_redeemed_at: "Gift card bought on order number %{order_number} and send to %{recipient_name} was redeeming"
+        visit_us: "Visit Us"
+        check_new_products: "Check new products on"
+    user_mailer:
+      create_active_user_email:
+        subject: "Welcome to %{site_name}"
+        tanks_here_your_password: "Thank you for signing up on %{site_name}. Here is your email and password."
     listing_gift_cards: "Listing Gift Cards"
+    order_mailer:
+      refund_email:
+        subject: "Refund from %{site_name}"
+        intro_message: "Thank you for shopping online with us. We have refunded your order. We will send you an additional note if this refund was not done at your request."

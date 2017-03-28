@@ -1,0 +1,25 @@
+<p style="margin:0 0 16px"><%= Spree.t('gift_card_mailer.gift_card_redeem_email.gift_redeemed_at', {order_number: @order.number, recipient_name: @gift_card.recipient_name} ) %>. <%= Spree.t('gift_card_mailer.gift_card_redeem_email.check_new_products') %> <a href="<%= root_url %>" target="_blank">krissorbie.com</a></p>
+
+<div>
+  <div style="clear:both;max-width:500px;margin:0 auto;margin-bottom:15px;border:5px solid #f7f4f4;padding:5px">
+    <div style="max-width:100%;height:auto;margin:0 auto;display:block">
+      <img src="https://ci4.googleusercontent.com/proxy/SI5o7OJ5OUA3VdUa2z5wSTHyAHzKIQqTNr5fl2NUg16ySokoouhnHtiR7QX3Ye2XDaCbqSw8rJfX9tqyzblFuNlv9qKkgrTISb5O6qvDCqxTn4zCObQHfzyZZAfVdY03LxpqTBlvdz3rYjNGhNeu=s0-d-e1-ft#http://6d4.ca5.myftpupload.com/wp-content/uploads/2016/01/giftcertificates2-960x960-1.jpg" alt="The main image for the gift card" title="The main image for the gift card" style="border:none;display:block;font-size:14px;font-weight:bold;height:auto;line-height:100%;outline:none;text-decoration:none;text-transform:capitalize;max-width:100%;margin:0 auto" tabindex="0">
+      <div class="a6S" dir="ltr" style="opacity: 1; left: 846px; top: 727px;">
+        <div role="button" tabindex="0" aria-label="Download attachment " data-tooltip-class="a1V" data-tooltip="Download">
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <div style="overflow:hidden;padding:5px 0;display:table;width:100%">
+      <div style="text-align:right;padding:10px;font-size:25px;font-weight:bold;display:inline-block;width:50%;float:right">
+        <span>$<%= number_with_precision(@gift_card.amount, precision: 2) %></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin:0 auto;margin-bottom:15px;text-align:center">
+  <a href="<%= root_url %>" style="color:#1adab1;font-weight:normal;text-decoration:underline;margin:0 auto;margin-bottom:15px;text-align:center" target="_blank"><%= Spree.t('gift_card_mailer.gift_card_redeem_email.visit_us') %></a>
+</div>
+
+
