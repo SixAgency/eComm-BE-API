@@ -6,7 +6,6 @@ module Spree::RefundSendEmail
   end
 
   private
-
   def send_customer_email
     Spree::OrderMailer.refund_email(self).deliver_later
   end

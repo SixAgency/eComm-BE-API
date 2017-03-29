@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170327105137) do
+ActiveRecord::Schema.define(version: 20170328043026) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "priority",                 default: 0, null: false
@@ -461,6 +461,7 @@ ActiveRecord::Schema.define(version: 20170327105137) do
     t.boolean  "gift_card",                                                          default: false
     t.decimal  "avg_rating",                                 precision: 7, scale: 5, default: "0.0", null: false
     t.integer  "reviews_count",                                                      default: 0,     null: false
+    t.integer  "sale",                                                               default: 0,     null: false
     t.index ["available_on"], name: "index_spree_products_on_available_on", using: :btree
     t.index ["deleted_at"], name: "index_spree_products_on_deleted_at", using: :btree
     t.index ["discontinue_on"], name: "index_spree_products_on_discontinue_on", using: :btree

@@ -1,5 +1,5 @@
 module Spree
-  module GiftCards::InventoryUnitConcerns
+  module GiftCard::InventoryUnitConcerns
     extend ActiveSupport::Concern
 
     included do
