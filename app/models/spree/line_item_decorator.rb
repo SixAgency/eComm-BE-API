@@ -1,4 +1,4 @@
-Spree::LineItem.include Spree::GiftCards::LineItemConcerns
+Spree::LineItem.include Spree::GiftCard::LineItemHasGiftCard
 
 Spree::LineItem.class_eval do
   delegate :sale, to: :product

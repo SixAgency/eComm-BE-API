@@ -1,1 +1,1 @@
-Spree::OrderContents.prepend Spree::GiftCards::OrderContentsConcerns
+Spree::OrderContents.prepend Spree::GiftCard::OrderHasGiftCard

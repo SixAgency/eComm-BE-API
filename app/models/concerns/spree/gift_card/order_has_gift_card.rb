@@ -1,7 +1,7 @@
 module Spree
   class GiftCardDateFormatError < StandardError; end
 
-  module GiftCards::OrderContentsConcerns
+  module GiftCard::OrderHasGiftCard
     def add(variant, quantity = 1, options = {})
       line_item = super
       create_gift_cards(line_item, quantity, options["gift_card_details"] || {})

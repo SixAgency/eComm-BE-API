@@ -1,1 +1,1 @@
-Spree::InventoryUnit.include Spree::GiftCards::InventoryUnitConcerns
+Spree::InventoryUnit.include Spree::GiftCard::InventoryUnitConcerns
