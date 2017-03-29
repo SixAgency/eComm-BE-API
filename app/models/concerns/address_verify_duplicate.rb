@@ -5,9 +5,7 @@ module AddressVerifyDuplicate
     validate :verify_duplicate, on: [:create, :update]
   end
 
-
   private
-
   def verify_duplicate
     if user_id.present? && similar_resource_exists?
       errors.add(:base, 'Not a unique user address!')

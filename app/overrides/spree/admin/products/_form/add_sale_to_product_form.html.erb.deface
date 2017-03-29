@@ -1,0 +1,9 @@
+<!-- insert_top '[data-hook="admin_product_form_right"]' -->
+<div class="field">
+  <%= f.field_container :sale, class: ['form-group'] do %>
+    <%= f.label :sale, Spree.t(:sale) %>
+    <%- options = [[Spree.t('match_choices.none'), 0]] + (1..9).to_a.map { |i| ["#{i * 10}%", i * 10] } %>
+    <%= f.select :sale, options_for_select(options, @product.sale), { }, { class: 'select2' } %>
+    <%= f.error_message_on :sale %>
+  <% end %>
+</div>
