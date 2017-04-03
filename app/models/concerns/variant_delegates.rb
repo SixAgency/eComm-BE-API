@@ -6,6 +6,7 @@ module VariantDelegates
 
   def images
     images = super
-    images.present? ? images : product.images
+    return images if images.present? || master?
+    return product.images
   end
 end
