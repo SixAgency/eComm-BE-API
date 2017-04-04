@@ -107,12 +107,12 @@ class Spree::VirtualGiftCard < Spree::Base
   end
 
   def send_email
-    Spree::GiftCardMailer.gift_card_email(self).deliver_later
+    Spree::GiftCardMailer.gift_card_email(self).deliver_now #TODO: Daniel Temporary fix, deliver_later not working
     update_attributes!(sent_at: DateTime.now)
   end
 
   def send_redeem_email
-    Spree::GiftCardMailer.gift_redeemed_email(self).deliver_later
+    Spree::GiftCardMailer.gift_redeemed_email(self).deliver_now #TODO: Daniel Temporary fix, deliver_later not working
   end
 
   def store_credit_category
