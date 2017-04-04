@@ -6,7 +6,7 @@ module Spree
       end
 
       def compute(object)
-        (object.amount * (100 - object.sale) / 100)
+        (object.amount * object.sale / 100)
       end
     end
   end
