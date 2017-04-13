@@ -32,6 +32,12 @@ Rails.application.routes.draw do
           patch :calculate_shipping, on: :member
         end
 
+        resources :checkouts, only: [:update] do
+          member do
+            put :reset
+          end
+        end
+
         resources :store_credit_events, only: [] do
           collection do
             get :mine
