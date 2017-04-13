@@ -24,6 +24,7 @@ Spree.user_class = "Spree::User"
 
 class ECommConfiguration < Spree::Preferences::Configuration
   preference :asset_host, :string, default: Figaro.env.asset_host
+  preference :password_reset_link, :string, default: Figaro.env.password_reset_link
 end
 
 EComm::Config = ECommConfiguration.new
