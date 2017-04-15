@@ -2,20 +2,16 @@ module Spree
   module Api
     module V1
       class UserAddressesController < Spree::Api::BaseController
-        swagger_controller :user_addresses, "User Addresses"
-
         load_and_authorize_resource :class => Address, except: [:index, :create]
 
         before_action :resource, only: [:show, :update, :destroy]
 
         ADDRESS_TYPE = %w(bill ship)
 
-        include Documentation::UserAddresses::Index
         def index
           respond_with_resource 200
         end
-
-        include Documentation::UserAddresses::Create
+        
         def create
           @address = current_api_user.spree_addresses.new(resource_params)
 
