@@ -1,3 +1,3 @@
 Spree::Api::V1::OrdersController.send :include,
-                                      OrderMailers,
+                                      OrderMailers, CalculateShipping,
                                       Spree::Core::ControllerHelpers::Order
