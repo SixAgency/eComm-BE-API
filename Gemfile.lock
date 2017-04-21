@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/CleverSoftwareSolutions/spree_reviews.git
-  revision: 6d1ccd600e9ab08891274e89302f85622ad073c0
-  ref: 6d1ccd6
+  revision: b7314b3dee7f774e661c675e4b9605eaac8ff74d
+  ref: b7314b3
   specs:
     spree_reviews (3.2.0.alpha)
       spree_auth_devise (>= 3.1.0, < 4.0)
