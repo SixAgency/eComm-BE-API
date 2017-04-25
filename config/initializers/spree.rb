@@ -18,6 +18,7 @@ end
 config = Rails.application.config
 config.spree.calculators.promotion_actions_create_item_adjustments << Spree::Calculators::Sale
 config.spree.promotions.rules                                      << Spree::Promotion::Rules::Sale
+config.spree.promotions.rules                                      << Spree::Promotion::Rules::BulkDiscount
 
 
 Spree.user_class = "Spree::User"
