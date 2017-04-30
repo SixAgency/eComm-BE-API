@@ -23,4 +23,7 @@ Spree::Order.class_eval do
     end
   end
 
+  def sale_amount
+    line_items.inject(0.0) { |sum, li| sum + li.sale_amount }
+  end
 end

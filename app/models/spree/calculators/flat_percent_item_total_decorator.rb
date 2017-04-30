@@ -1,0 +1,1 @@
+Spree::Calculator::FlatPercentItemTotal.prepend FlatPercentWithSale

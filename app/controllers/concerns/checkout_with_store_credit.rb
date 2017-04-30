@@ -8,21 +8,16 @@ module CheckoutWithStoreCredit
   def add_store_credit_payments
     authorize! :update, @order, order_token
 
-    if params.delete(:apply_store_credit)
-      @order.add_store_credit_payments
+    if params.has_key? :apply_store_credit
+      apply_store_credit = params.delete :apply_store_credit
 
-      # Remove other payment method parameters.
-      if params[:order]
-        params[:order].delete(:payments_attributes)
-        params[:order].delete(:existing_card)
+      if apply_store_credit
+        @order.add_store_credit_payments
+      else
+        @order.payments.store_credits.where(state: 'checkout').map(&:invalidate!)
       end
 
-      params.delete(:payment_source)
-
-      # Return to the Payments page if additional payment is needed.
-      if @order.payments.valid.sum(:amount) < @order.total
-        respond_with(@order, default_template: 'spree/api/v1/orders/show') and return
-      end
+      respond_with(@order, default_template: 'spree/api/v1/orders/show') and return
     end
   end
 end
