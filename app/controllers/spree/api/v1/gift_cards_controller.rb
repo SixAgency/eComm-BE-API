@@ -7,9 +7,7 @@ module Spree
         def redeem
           redemption_code = Spree::RedemptionCodeGenerator.format_redemption_code_for_lookup(params[:redemption_code] || "")
           @gift_card = Spree::VirtualGiftCard.active_by_redemption_code(redemption_code)
-          if !@gift_card
-            render status: :not_found, json: redeem_fail_response
-          elsif @gift_card.redeem(@current_api_user)
+          if @gift_card && @gift_card.redeem(@current_api_user)
             render status: :created, json: {}
           else
             render status: 422, json: redeem_fail_response

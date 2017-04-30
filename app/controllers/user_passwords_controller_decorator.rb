@@ -1,7 +1,7 @@
 Spree::UserPasswordsController.class_eval do
   skip_before_filter :verify_authenticity_token, only: [:create], if: :api_request?
 
-    # Overridden due to bug in Devise.
+  # Overridden due to bug in Devise.
   #   respond_with resource, :location => new_session_path(resource_name)
   # is generating bad url /session/new.user
   #
@@ -27,7 +27,7 @@ Spree::UserPasswordsController.class_eval do
     else
       respond_to do |format|
         format.json {
-          render :json => {:errors => resource.errors.full_messages}
+          render json: { errors: resource.errors  }, status: 422
         }
 
         format.html {
@@ -46,7 +46,7 @@ Spree::UserPasswordsController.class_eval do
       resource.reset_password_token = params[:spree_user][:reset_password_token]
       respond_to do |format|
         format.json {
-          render :json => {:errors => "Password can't be blank"}
+          render json: { errors: { password: ["Password can't be blank"] }}, status: 422
         }
 
         format.html {
@@ -88,7 +88,7 @@ Spree::UserPasswordsController.class_eval do
 
         respond_to do |format|
           format.json {
-            render :json => {:errors => resource.errors.full_messages}
+            render json: { errors: resource.errors }, status: 422
           }
 
           format.html {
