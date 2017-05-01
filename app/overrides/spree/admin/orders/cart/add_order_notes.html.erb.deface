@@ -1,0 +1,9 @@
+<!-- insert_after '[data-hook="admin_order_edit_form"]' -->
+<% if @order.note.present? %>
+  <div class="panel panel-default">
+    <div class="panel-heading">                        
+      <h3 class="panel-title"><%= Spree.t(:order_notes) %></h3>
+    </div>
+    <textarea class="form-control custom-control" readonly><%= @order.note.html_safe %></textarea>
+  </div>
+<% end %>
