@@ -2,20 +2,18 @@ module CalculateShipping
 
   def calculate_shipping
     authorize! :show, @order, order_token
-    if @order.state == 'cart'
-      @order.build_ship_address(order_ship_address_params.merge({partial: true}))
-      @order.create_proposed_shipments
-      @order.set_shipments_cost
-      @order.apply_free_shipping_promotions
-      
-      @order.update_line_item_prices!
-      @order.create_tax_charge!
-      @order.update_totals
-      @order.persist_totals
-      respond_with(@order, default_template: :show)
-    else
-      invalid_resource!(@order)
-    end
+    @order.build_ship_address(order_ship_address_params.merge({partial: true}))
+
+    @order.create_proposed_shipments
+    @order.set_shipments_cost
+    @order.apply_free_shipping_promotions
+    
+    @order.update_columns(state: 'cart')
+    @order.update_line_item_prices!
+    @order.create_tax_charge!
+    @order.update_totals
+    @order.persist_totals
+    respond_with(@order, default_template: :show)
   end
 
   private
