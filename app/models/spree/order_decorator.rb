@@ -1,4 +1,5 @@
-Spree::Order.send :include, OrderEmailDelivery, Spree::GiftCard::OrderConcern
+Spree::Order.send :include, OrderEmailDelivery, Spree::GiftCard::OrderConcern,
+                            ResetPartialAddresses
 
 Spree::Order.class_eval do
   # guest orders are one time customers from Square's point of view.

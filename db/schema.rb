@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170328043026) do
+ActiveRecord::Schema.define(version: 20170501093544) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "priority",                 default: 0, null: false
@@ -54,11 +54,12 @@ ActiveRecord::Schema.define(version: 20170328043026) do
     t.string   "company"
     t.integer  "state_id"
     t.integer  "country_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "user_id"
     t.string   "braintree_id"
     t.integer  "user_address_id"
+    t.boolean  "partial",           default: false
     t.index ["country_id"], name: "index_spree_addresses_on_country_id", using: :btree
     t.index ["firstname"], name: "index_addresses_on_firstname", using: :btree
     t.index ["lastname"], name: "index_addresses_on_lastname", using: :btree
