@@ -82,6 +82,3 @@ en:
       sale:
         name: "Sale"
         description: "Sale with discount set on the product"
-      bulk_discount:
-        name: "Bulk Discount"
-        description: "Line item discount with a minimum quantity"
