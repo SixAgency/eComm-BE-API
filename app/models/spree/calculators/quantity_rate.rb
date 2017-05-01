@@ -1,7 +1,7 @@
 module Spree
   module Calculators
     class QuantityRate < Calculator
-      preference :prices_by_quantity, :hash
+      preference :prices_by_quantity, :hash,    default: {}
       preference :currency,           :string,  default: ->{ Spree::Config[:currency] }
 
       validate :preferred_prices_by_quantity_content
