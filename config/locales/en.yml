@@ -82,3 +82,6 @@ en:
       sale:
         name: "Sale"
         description: "Sale with discount set on the product"
+      no_other_promo:
+        name: "No Other Promotion"
+        description: "No other active promotions on the product"
