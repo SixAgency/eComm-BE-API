@@ -12,7 +12,8 @@ module Spree
         end
 
         def actionable?(line_item)
-          !line_item.adjustments.any? do |adjustment|
+          adjustments = line_item.adjustments + line_item.order.adjustments
+          !adjustments.any? do |adjustment|
             adjustment.source_type == 'Spree::PromotionAction' &&
             adjustment.source.promotion_id != promotion.id
           end
