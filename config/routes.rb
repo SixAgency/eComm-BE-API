@@ -30,6 +30,7 @@ Rails.application.routes.draw do
 
         resources :orders, only: [] do
           patch :calculate_shipping, on: :member
+          put   :remove_promotions, on: :member
         end
 
         resources :checkouts, only: [:update] do
