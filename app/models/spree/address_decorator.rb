@@ -1,1 +1,1 @@
-Spree::Address.send :include, AddressVerifyDuplicate, PartialAddresses
+Spree::Address.send :include, PartialAddresses

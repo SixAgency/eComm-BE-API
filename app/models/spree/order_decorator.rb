@@ -5,8 +5,6 @@ Spree::Order.class_eval do
   # guest orders are one time customers from Square's point of view.
   has_one :square_customer, as: :owner
 
-  def persist_user_address!; end
-
   def reset!
     if completed?
       raise Spree.t(:cannot_empty_completed_order)
