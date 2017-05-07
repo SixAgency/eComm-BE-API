@@ -1,1 +1,1 @@
-<%= link_to "Order##{@order.number}", EComm::Config.order_link + @order.id %> (<%= Time.now %>)
+<%= link_to "Order##{@order.number}", "#{EComm::Config.order_link}#{@order.number}?guest_token=#{@order.guest_token}" %> (<%= Time.now %>)
