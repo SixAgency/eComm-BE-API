@@ -15,7 +15,7 @@ set :puma_threads,    [4, 16]
 set :puma_workers,    0
 
 set :rvm_ruby_version, '2.3.1@eComm'
-
+set :bundle_binstubs, nil
 set :pty,             true
 set :use_sudo,        true
 set :stages,          [:production, :staging]
@@ -45,7 +45,7 @@ set :nginx_log_path,  "/logs/#{fetch(:application)}_#{fetch(:stage)}"
 
 ## Linked Files & Directories (Default None):
 set :linked_files, %w{config/database.yml config/application.yml config/secrets.yml}
-set :linked_dirs, %w(bin tmp/pids public/spree log)
+set :linked_dirs, %w(tmp/pids public/spree log)
 # set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 namespace :puma do
