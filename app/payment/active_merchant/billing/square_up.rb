@@ -250,8 +250,11 @@ module ActiveMerchant
         #
         # Calcutates the already refunded amount
         #
-        refunded_amount = transaction.refunds.reduce(0) do |sum, refund|
-          sum + (refund.tender_id == tender.id ? refund.amount_money.amount : 0)
+        refunded_amount = 0
+        if transaction.refunds
+          refunded_amount = transaction.refunds.reduce(0) do |sum, refund|
+            sum + (refund.tender_id == tender.id ? refund.amount_money.amount : 0)
+          end
         end
 
         amount = tender.amount_money.amount - refunded_amount
