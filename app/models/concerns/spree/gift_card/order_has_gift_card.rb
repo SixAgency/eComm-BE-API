@@ -16,6 +16,7 @@ module Spree
 
     def update_cart(params)
       update_success = super(params)
+      order.reload
 
       if update_success && params[:line_items_attributes]
         params[:line_items_attributes].each_pair do |id, value|
