@@ -25,6 +25,13 @@ module Spree::GiftCard::OrderConcern
       gift_cards.each_with_index do |gift_card, index|
         gift_card.make_redeemable!(purchaser: user, inventory_unit: inventory_units[index])
       end
+
+      # ship automaticaly all shipments that contains only gift_cards
+      shipments.each do |shipment|
+        if shipment.line_items.all?{ |line_item| line_item.gift_card? }
+          shipment.ship!
+        end
+      end
     end
 
     def send_gift_card_emails
