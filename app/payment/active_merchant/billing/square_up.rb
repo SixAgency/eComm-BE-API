@@ -142,7 +142,9 @@ module ActiveMerchant
         # Gateway Error, e.g.: refused payment or an invalid request
         #
         rescue SquareConnect::ApiError => e
-          SquareResponse.new(false, e.message, JSON.parse(e.response_body))
+          params = JSON.parse(e.response_body)
+          params['message'] = params["errors"].map{ |e| e["detail"] }.join(" ")
+          SquareResponse.new(false, params['message'], params)
         #
         # Something went really wrong here.
         # [TODO] Notify the whole team about the issue.
