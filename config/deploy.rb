@@ -21,18 +21,16 @@ set :use_sudo,        true
 set :stages,          [:production, :staging]
 set :default_stage,   :staging
 set :deploy_via,      :remote_cache
-set :deploy_to,       "/app/#{fetch(:application)}_#{fetch(:stage)}"
 set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
 set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
 set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
-set :puma_access_log, '/logs/puma.error.log'
-set :puma_error_log,  '/logs/puma.access.log'
-set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
+set :puma_access_log, '/logs/puma/puma.error.log'
+set :puma_error_log,  '/logs/puma/puma.access.log'
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
 
-set :nginx_log_path,  "/logs/#{fetch(:application)}_#{fetch(:stage)}"
+set :nginx_log_path,  "/logs/nginx/#{fetch(:application)}_#{fetch(:stage)}"
 
 # set :whenever_cron,   -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 
@@ -45,7 +43,7 @@ set :nginx_log_path,  "/logs/#{fetch(:application)}_#{fetch(:stage)}"
 
 ## Linked Files & Directories (Default None):
 set :linked_files, %w{config/database.yml config/application.yml config/secrets.yml}
-set :linked_dirs, %w(tmp/pids public/spree log)
+set :linked_dirs, %w(public/spree)
 # set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 namespace :puma do

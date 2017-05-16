@@ -2,6 +2,7 @@ set :stage, :staging
 set :branch, 'master'
 
 set :nginx_server_name, ENV['staging_server_name']
+set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
 
 # server-based syntax
 # ======================

@@ -2,6 +2,16 @@ set :stage, :production
 set :branch, 'master'
 
 set :nginx_server_name, ENV['production_server_name']
+set :ssh_options,     { forward_agent: true, user: fetch(:user), auth_methods: ["publickey"], keys: [ENV['pem_location']] }
+
+set :deploy_to,       "/www/#{fetch(:application)}_#{fetch(:stage)}"
+set :puma_workers, 4
+
+set :nginx_server_name, ENV['production_server_name']
+
+set :nginx_use_ssl, true
+set :nginx_cert_name, 'ks'
+
 
 # server-based syntax
 # ======================
