@@ -21,9 +21,9 @@ set :use_sudo,        true
 set :stages,          [:production, :staging]
 set :default_stage,   :staging
 set :deploy_via,      :remote_cache
-set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
-set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
-set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
+set :puma_bind,       ->{"unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"}
+set :puma_state,      ->{"#{shared_path}/tmp/pids/puma.state"}
+set :puma_pid,        ->{"#{shared_path}/tmp/pids/puma.pid"}
 set :puma_access_log, '/logs/puma/puma.error.log'
 set :puma_error_log,  '/logs/puma/puma.access.log'
 set :puma_preload_app, true
