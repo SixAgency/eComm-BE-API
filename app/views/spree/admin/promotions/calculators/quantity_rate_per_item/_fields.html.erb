@@ -1,0 +1,42 @@
+<div class="form-group">
+  <%= label_tag "#{prefix}[calculator_attributes][preferred_currency]",
+    Spree.t(:currency) %>
+  <%= preference_field_tag(
+    "#{prefix}[calculator_attributes][preferred_currency]",
+    calculator.preferred_currency,
+    type: calculator.preference_type(:currency)) %>
+</div>
+
+<div class="form-group no-marginb">
+  <%= label_tag nil, Spree.t(:quantites) %>
+  <%= content_tag :div, nil, class: "hidden js-original-tiers",
+      data: { :'original-tiers' => calculator.preferred_prices_by_quantity.sort.to_h } %>
+</div>
+
+<div class="js-tiers"></div>
+<button class="btn btn-success js-add-tier"><%= Spree.t(:add) %></button>
+
+<script type="text/x-handlebars-template" id="tier-input-name">
+  <%= prefix %>[calculator_attributes][preferred_prices_by_quantity][{{base}}]
+</script>
+
+<script type="text/x-handlebars-template" id="tier-fields-template">
+  <div class="tier panel panel-default">
+    <div class="panel-body">
+      <div class="form-group">
+        <div class="input-group">
+        <span class="input-group-addon">Quantity</span>
+          <input class="js-base-input form-control" type="text" value={{baseField.value}}>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+        <span class="input-group-addon"><%= calculator.preferred_currency%></span>
+          <input class="js-value-input form-control"
+            name="{{valueField.name}}" type="text" value={{valueField.value}}>
+        </div>
+      </div>
+      <a class="js-remove-tier btn btn-default btn-sm"><span class="icon icon-delete"></span></a>
+    </div>
+  </div>
+</script>
