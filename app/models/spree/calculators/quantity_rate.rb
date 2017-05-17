@@ -15,7 +15,7 @@ module Spree
         return prices.max_by{|k, v| k.to_i}.last.to_f if prices.count > 0
         return 0.0
       end
-    
+
       private
       def preferred_prices_by_quantity_content
         if preferred_prices_by_quantity.is_a? Hash
@@ -25,7 +25,7 @@ module Spree
         else
           errors.add(:preferred_prices_by_quantity, :should_be_hash)
         end
-      end 
+      end
     end
   end
 end
