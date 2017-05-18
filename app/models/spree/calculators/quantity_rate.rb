@@ -19,7 +19,7 @@ module Spree
       private
       def preferred_prices_by_quantity_content
         if preferred_prices_by_quantity.is_a? Hash
-          unless preferred_prices_by_quantity.all?{ |k, v| k.to_i > 0 && v.to_i > 0 }
+          unless preferred_prices_by_quantity.all?{ |k, v| k.to_i >= 0 && v.to_i >= 0 }
             errors.add(:preferred_prices_by_quantity, :should_contain_positive_numbers)
           end
         else
