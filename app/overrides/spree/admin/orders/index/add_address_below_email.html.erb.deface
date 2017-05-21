@@ -1,0 +1,19 @@
+<!-- replace "erb[silent]:contains('if order.user')"
+    closing_selector "erb[silent]:contains('end')" -->
+
+<%- address = order.ship_address %>
+
+<% if address %>
+    <br/>
+    <%= link_to edit_admin_order_path(order) do %>
+        <%= order.name %> <br/>
+        <%= "#{address.address1}, #{address.address2}" %> <br/>
+        <%= "#{address.city}, #{address.zipcode}" %>
+    <% end %>
+
+    <%- shipment = order.shipments.last %>
+    <% if shipment %>
+        <br/>
+        Via <%= shipment.shipping_method.try(:name) || 'N/A' %>
+    <% end %>
+<% end %>
