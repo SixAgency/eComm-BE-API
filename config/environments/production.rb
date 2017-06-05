@@ -56,6 +56,15 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "eComm_#{Rails.env}"
   config.action_mailer.perform_caching = false
+  config.action_mailer.default_options = {from: 'no-reply@krissorbie.com'}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address:              ENV['mail_host'],
+      port:                 587,
+      user_name:            ENV['mail_user'],
+      password:             ENV['mail_password'],
+      authentication:       'plain',
+      enable_starttls_auto: true  }
 
   # add image_tag and image_url for mailer view
   config.action_mailer.asset_host = 'http://krissorbie.com'
