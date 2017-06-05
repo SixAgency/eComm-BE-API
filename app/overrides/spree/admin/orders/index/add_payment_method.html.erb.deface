@@ -1,0 +1,7 @@
+<!-- insert_after "erb[loud]:contains('order.display_total.to_html')" -->
+<br/>
+<label>
+    Via
+    <% order.payments.each_with_index do |payment, index| %><% if index > 0 %>, <% end %><%= payment_method_name(payment) %><% end %>
+</label>
+
