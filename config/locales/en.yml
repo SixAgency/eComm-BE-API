@@ -85,3 +85,6 @@ en:
       no_other_promo:
         name: "No Other Promotion"
         description: "No other active promotions on the product"
+      promotable_only:
+        name: "Promotable Only"
+        description: "Contains only promotable products"
