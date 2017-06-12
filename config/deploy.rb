@@ -11,8 +11,8 @@ server ENV['host'], roles: [:web, :app, :db], primary: true
 set :repo_url,        ENV['repo_url']
 set :application,     ENV['app_name']
 set :user,            ENV['deploy_user']
-set :puma_threads,    [4, 16]
-set :puma_workers,    0
+set :puma_threads,    [1, 2]
+set :puma_workers,    4
 
 set :rvm_ruby_version, '2.3.1@eComm'
 set :bundle_binstubs, nil
