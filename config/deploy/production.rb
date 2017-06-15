@@ -5,7 +5,8 @@ set :nginx_server_name, ENV['production_server_name']
 set :ssh_options,     { forward_agent: true, user: fetch(:user), auth_methods: ["publickey"], keys: [ENV['pem_location']] }
 
 set :deploy_to,       "/www/#{fetch(:application)}_#{fetch(:stage)}"
-set :puma_workers, 4
+set :puma_threads, [1, 2]
+set :puma_workers, 2
 
 set :nginx_server_name, ENV['production_server_name']
 
