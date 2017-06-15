@@ -44,6 +44,7 @@ set :nginx_log_path,  "/logs/nginx/#{fetch(:application)}_#{fetch(:stage)}"
 ## Linked Files & Directories (Default None):
 set :linked_files, %w{config/database.yml config/application.yml config/secrets.yml}
 set :linked_dirs, %w(public/spree)
+set :linked_dirs, %w{tmp/pids}
 # set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 namespace :puma do
@@ -71,4 +72,9 @@ namespace :deploy do
   after  :finishing,    :cleanup
 end
 
-
+after 'deploy:publishing', 'deploy:restart'
+namespace :deploy do
+  task :restart do
+    invoke 'delayed_job:restart'
+  end
+end
