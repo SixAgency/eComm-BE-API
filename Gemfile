@@ -8,7 +8,8 @@ gem 'spree_auth_devise', github: 'spree/spree_auth_devise'
 gem 'spree_gateway', github: 'spree/spree_gateway'
 gem 'spree_related_products', github: 'spree-contrib/spree_related_products'
 gem 'spree_active_shipping', github: 'spree-contrib/spree_active_shipping'
-gem 'spree_reviews', github:'CleverSoftwareSolutions/spree_reviews', ref: 'b7314b3'
+gem 'spree_mail_settings', github: 'spree-contrib/spree_mail_settings'
+gem 'spree_reviews', github:'CleverSoftwareSolutions/spree_reviews', ref: '9c56a8a'
 
 gem 'mysql2'                                        # Mysql library for Ruby
 

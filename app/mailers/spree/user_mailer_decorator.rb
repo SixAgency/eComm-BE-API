@@ -3,7 +3,7 @@ Spree::UserMailer.class_eval do
 
   def reset_password_instructions(user, token, *args)
       @edit_password_reset_url = EComm::Config.password_reset_link + token
-      mail to: user.email, from: from_address, subject: Spree::Store.current.name + ' ' + I18n.t(:subject, :scope => [:devise, :mailer, :reset_password_instructions])
+      mail to: user.email, bcc: [], from: from_address, subject: Spree::Store.current.name + ' ' + I18n.t(:subject, :scope => [:devise, :mailer, :reset_password_instructions])
   end
 
   def create_active_user(user, password)
