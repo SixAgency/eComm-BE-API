@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170504103630) do
+ActiveRecord::Schema.define(version: 20170627135800) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "priority",                 default: 0, null: false
@@ -445,25 +445,24 @@ ActiveRecord::Schema.define(version: 20170504103630) do
   end
 
   create_table "spree_products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name",                                                                default: "",    null: false
-    t.text     "description",                  limit: 65535
+    t.string   "name",                                                        default: "",    null: false
+    t.text     "description",          limit: 65535
     t.datetime "available_on"
     t.datetime "discontinue_on"
     t.datetime "deleted_at"
     t.string   "slug"
-    t.text     "meta_description",             limit: 65535
+    t.text     "meta_description",     limit: 65535
     t.string   "meta_keywords"
     t.integer  "tax_category_id"
     t.integer  "shipping_category_id"
-    t.datetime "created_at",                                                                          null: false
-    t.datetime "updated_at",                                                                          null: false
-    t.boolean  "promotionable",                                                       default: true
+    t.datetime "created_at",                                                                  null: false
+    t.datetime "updated_at",                                                                  null: false
+    t.boolean  "promotionable",                                               default: true
     t.string   "meta_title"
-    t.integer  "max_quantity_allowed_in_cart",                                        default: 0,     null: false
-    t.boolean  "gift_card",                                                           default: false
-    t.decimal  "avg_rating",                                 precision: 7,  scale: 5, default: "0.0", null: false
-    t.integer  "reviews_count",                                                       default: 0,     null: false
-    t.decimal  "sale",                                       precision: 10, scale: 2, default: "0.0", null: false
+    t.boolean  "gift_card",                                                   default: false
+    t.decimal  "avg_rating",                         precision: 7,  scale: 5, default: "0.0", null: false
+    t.integer  "reviews_count",                                               default: 0,     null: false
+    t.decimal  "sale",                               precision: 10, scale: 2, default: "0.0", null: false
     t.index ["available_on"], name: "index_spree_products_on_available_on", using: :btree
     t.index ["deleted_at"], name: "index_spree_products_on_deleted_at", using: :btree
     t.index ["discontinue_on"], name: "index_spree_products_on_discontinue_on", using: :btree
@@ -1093,22 +1092,23 @@ ActiveRecord::Schema.define(version: 20170504103630) do
   end
 
   create_table "spree_variants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "sku",                                      default: "",    null: false
-    t.decimal  "weight",          precision: 8,  scale: 2, default: "0.0"
-    t.decimal  "height",          precision: 8,  scale: 2
-    t.decimal  "width",           precision: 8,  scale: 2
-    t.decimal  "depth",           precision: 8,  scale: 2
+    t.string   "sku",                                                   default: "",    null: false
+    t.decimal  "weight",                       precision: 8,  scale: 2, default: "0.0"
+    t.decimal  "height",                       precision: 8,  scale: 2
+    t.decimal  "width",                        precision: 8,  scale: 2
+    t.decimal  "depth",                        precision: 8,  scale: 2
     t.datetime "deleted_at"
     t.datetime "discontinue_on"
-    t.boolean  "is_master",                                default: false
+    t.boolean  "is_master",                                             default: false
     t.integer  "product_id"
-    t.decimal  "cost_price",      precision: 10, scale: 2
+    t.decimal  "cost_price",                   precision: 10, scale: 2
     t.string   "cost_currency"
     t.integer  "position"
-    t.boolean  "track_inventory",                          default: true
+    t.boolean  "track_inventory",                                       default: true
     t.integer  "tax_category_id"
-    t.datetime "updated_at",                                               null: false
-    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                                            null: false
+    t.datetime "created_at",                                                            null: false
+    t.integer  "max_quantity_allowed_in_cart",                          default: 0,     null: false
     t.index ["deleted_at"], name: "index_spree_variants_on_deleted_at", using: :btree
     t.index ["discontinue_on"], name: "index_spree_variants_on_discontinue_on", using: :btree
     t.index ["is_master"], name: "index_spree_variants_on_is_master", using: :btree
