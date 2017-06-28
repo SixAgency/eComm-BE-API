@@ -1,4 +1,4 @@
-<!-- insert_top '[data-hook="admin_product_form_sku"]' -->
+<!-- insert_top '[data-hook="admin_product_form_available_on"]' -->
 <%= f.field_container :max_quantity_allowed_in_cart, class: ['form-group'] do %>
     <%= f.label :max_quantity_allowed_in_cart, Spree.t(:max_quantity_allowed_in_cart) %>
     <%= f.text_field :max_quantity_allowed_in_cart, class: 'form-control' %>
