@@ -1,0 +1,14 @@
+<!-- replace '#preference-settings .calculator-settings' -->
+<div class="calculator-settings">
+  <% type_name = @object.calculator.type.demodulize.underscore %>
+  <% if lookup_context.exists?("fields",
+      ["spree/admin/shipping_methods/calculators/#{type_name}"], true) %>
+    <%= render "spree/admin/shipping_methods/calculators/#{type_name}/fields",
+      calculator: @object.calculator, prefix: "shipping_method" %>
+    <%= hidden_field_tag "shipping_method[calculator_attributes][id]", @object.calculator.id %>
+  <% else %>
+    <%= f.fields_for :calculator do |calculator_form| %>
+      <%= preference_fields @object.calculator, calculator_form %>
+    <% end %>
+  <% end %>
+</div>

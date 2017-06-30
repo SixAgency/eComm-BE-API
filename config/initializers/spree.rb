@@ -19,6 +19,7 @@ config = Rails.application.config
 config.spree.calculators.promotion_actions_create_item_adjustments << Spree::Calculators::Sale
 config.spree.calculators.promotion_actions_create_item_adjustments << Spree::Calculators::QuantityRate
 config.spree.calculators.promotion_actions_create_item_adjustments << Spree::Calculators::QuantityRatePerItem
+config.spree.calculators.shipping_methods                          << Spree::Calculators::Shipping::TieredFlatRate
 config.spree.promotions.rules                                      << Spree::Promotion::Rules::Sale
 config.spree.promotions.rules                                      << Spree::Promotion::Rules::NoOtherPromo
 config.spree.promotions.rules                                      << Spree::Promotion::Rules::PromotableOnly
