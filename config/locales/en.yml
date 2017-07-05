@@ -20,12 +20,12 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello"
+  hi: "Hi"
   email: "Email"
   password: "Password"
-  thanks: "Thanks"
+  thanks: "Thank you"
   site_name_team: "%{site_name} team"
-  start_and_support_message: "A good place to get started on %{site_name} is our shop section. For help and customer support you can always send us a message from contact section."
+  start_and_support_message: "Please be sure to visit our shop section. If you require customer support or if you just want to say hello, please send us a message via our contact page."
 
   spree:
     admin:
@@ -58,21 +58,21 @@ en:
         dear_customer: "Dear customer"
         your_gift_card_code: "Your Gift Card code"
         gift_card_code: "Gift card code: %{code}"
-        subject: "You have received a gift card"
+        subject: "You have received an E-Gift certificate"
         received_gift_card_from: "You have received a gift card from %{recipient_name}"
         shop_at: "Please shop online at"
         amount: "Amount"
         shop_now: "Shop Now"
         message: "Message from buyer"
       gift_card_redeem_email:
-        subject: "Gift card send to %{recipient_name} was redeeming"
-        gift_redeemed_at: "Gift card bought on order number %{order_number} and send to %{recipient_name} was redeeming"
+        subject: "E-Gift card sent to %{recipient_name} was redeemed."
+        gift_redeemed_at: "E-Gift card order number %{order_number} sent to %{recipient_name} was redeemed."
         visit_us: "Visit Us"
-        check_new_products: "Check new products on"
+        please_visit_us: "Please visit us at"
     user_mailer:
       create_active_user_email:
         subject: "Welcome to %{site_name}"
-        tanks_here_your_password: "Thank you for signing up on %{site_name}. Here is your email and password."
+        tanks_here_your_password: "Thank you for creating an account with %{site_name}. Please see your email and password below."
     listing_gift_cards: "Listing Gift Cards"
     order_mailer:
       refund_email:
