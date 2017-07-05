@@ -77,7 +77,7 @@ en:
     order_mailer:
       refund_email:
         subject: "Refund from %{site_name}"
-        intro_message: "Thank you for shopping online with us. We have refunded your order. We will send you an additional note if this refund was not done at your request."
+        intro_message: "Thank you for shopping with us. We have refunded your order. We will send you an additional email if the refund was not done at your request."
     promotion_rule_types:
       sale:
         name: "Sale"
