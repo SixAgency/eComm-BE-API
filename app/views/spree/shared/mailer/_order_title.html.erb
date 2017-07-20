@@ -3,5 +3,5 @@
      style="color:#1adab1;font-weight:normal;text-decoration:underline" target="_blank">
     Order#<%= @order.number %>
   </a>
-  (<%= time_tag Time.now %>)
+  (<%= Time.now.strftime('%B %e, %Y %I:%M %p') %>)
 </h2>

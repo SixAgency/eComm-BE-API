@@ -13,4 +13,7 @@
 <%= Spree.t('shipment_mailer.shipped_email.track_information', tracking: @shipment.tracking) if @shipment.tracking %>
 <%= Spree.t('shipment_mailer.shipped_email.track_link', url: @shipment.tracking_url) if @shipment.tracking_url %>
 
+<%= "Note form the Kris Sorbie team:" if @shipment.tracking %>
+<%= @shipment.note if @shipment.note %>
+
 <%= Spree.t('shipment_mailer.shipped_email.thanks') %>
