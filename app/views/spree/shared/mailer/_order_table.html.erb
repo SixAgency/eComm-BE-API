@@ -34,7 +34,7 @@
       </tr>
   <% end %>
 
-  <% if @order.all_adjustments.promotion.eligible.exists? %>
+  <% if @order.all_adjustments.promotion.eligible.exists? and @order.promo_total != 0 %>
       <tr>
         <th scope="row" colspan="2" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Promotion:</th>
         <td style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">
