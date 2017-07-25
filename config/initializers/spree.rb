@@ -44,6 +44,7 @@ Spree::PermittedAttributes.product_attributes.push :max_quantity_allowed_in_cart
 Spree::PermittedAttributes.checkout_attributes.push :line_item_attributes, :note,
                                                     :ship_address, :bill_address
 Spree::PermittedAttributes.source_attributes.push :nonce
+Spree::PermittedAttributes.shipment_attributes.push :note
 
 # ..gems/spree/api/app/helpers/spree/api/api_helpers.rb to let show
 Spree::Api::ApiHelpers.user_attributes.push :f_name, :l_name
@@ -51,6 +52,7 @@ Spree::Api::ApiHelpers.product_attributes.push :max_quantity_allowed_in_cart, :s
 Spree::Api::ApiHelpers.variant_attributes.push :max_quantity_allowed_in_cart, :sale, :is_sale
 Spree::Api::ApiHelpers.address_attributes.push :user_address_id
 Spree::Api::ApiHelpers.order_attributes.push :note
+Spree::Api::ApiHelpers.shipment_attributes.push :note
 
 # In order to run guest user that don't require an API key
 Spree::Api::Config[:requires_authentication] = false

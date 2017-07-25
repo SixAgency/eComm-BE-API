@@ -1,0 +1,26 @@
+<tr class="edit-note is-hidden">
+  <td colspan="5">
+    <label>Note:</label>
+    <%= text_field_tag :note, shipment.note, class: "form-control" %>
+  </td>
+  <td class="actions">
+    <% if can? :update, shipment %>
+      <%= link_to_with_icon 'cancel', Spree.t('actions.cancel'), "#", class: 'cancel-note btn btn-primary btn-sm', data: {action: 'cancel'}, title: Spree.t('actions.cancel'), no_text: true %>
+      <%= link_to_with_icon 'save', Spree.t('actions.save'), "#", class: 'save-note btn btn-success btn-sm', data: {'shipment-number' => shipment.number, action: 'save'}, title: Spree.t('actions.save'), no_text: true %>
+    <% end %>
+  </td>
+</tr>
+<tr class="show-note">
+	<td colspan="5" class="shipment-note">
+		<% if shipment.note.present? %>
+		<strong>Note:</strong> <%= shipment.note %>
+		<% else %>
+		No note added
+		<% end %>
+	</td>
+	<td class="actions text-center">
+		<% if can? :update, shipment %>
+		<%= link_to_with_icon 'edit', Spree.t('edit'), "#", class: 'edit-note btn btn-primary btn-sm', data: {action: 'edit'}, title: Spree.t('edit'), no_text: true %>
+		<% end %>
+	</td>
+</tr>

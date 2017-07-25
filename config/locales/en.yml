@@ -56,10 +56,10 @@ en:
     gift_card_mailer:
       gift_card_email:
         dear_customer: "Dear customer"
-        your_gift_card_code: "Your Gift Card code"
-        gift_card_code: "Gift card code: %{code}"
-        subject: "You have received an E-Gift certificate"
-        received_gift_card_from: "You have received a gift card from %{recipient_name}"
+        your_gift_card_code: "Your E-Gift Card code"
+        gift_card_code: "E-Gift card code: %{code}"
+        subject: "You have received an E-Gift card"
+        received_gift_card_from: "You have received an E-Gift Card from %{recipient_name}"
         shop_at: "Please shop online at"
         amount: "Amount"
         shop_now: "Shop Now"
@@ -77,7 +77,7 @@ en:
     order_mailer:
       refund_email:
         subject: "Refund from %{site_name}"
-        intro_message: "Thank you for shopping online with us. We have refunded your order. We will send you an additional note if this refund was not done at your request."
+        intro_message: "Thank you for shopping with us. We have refunded your order. We will send you an additional email if the refund was not done at your request."
     promotion_rule_types:
       sale:
         name: "Sale"
