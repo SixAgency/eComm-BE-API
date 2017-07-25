@@ -5,7 +5,12 @@ require 'capistrano/rails'
 require 'capistrano/bundler'
 require 'capistrano/rvm'
 require 'capistrano/puma'
-require 'capistrano/puma/nginx'
+install_plugin Capistrano::Puma
+install_plugin Capistrano::Puma::Nginx
+
+require 'capistrano/scm/git'
+install_plugin Capistrano::SCM::Git
+
 require 'capistrano/upload-config'
 require 'capistrano/linked_files'
 require 'capistrano/delayed_job'
