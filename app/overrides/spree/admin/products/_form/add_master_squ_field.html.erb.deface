@@ -1,0 +1,8 @@
+<!-- insert_before '[data-hook="admin_product_form_multiple_variants"]' -->
+
+<div>
+  <%= f.field_container :sku, class: ['form-group'] do %>
+    <%= f.label :sku, Spree.t(:sku) %>
+    <%= f.text_field :sku, size: 16, class: 'form-control' %>
+  <% end %>
+</div>
