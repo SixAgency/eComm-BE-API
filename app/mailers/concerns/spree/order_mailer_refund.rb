@@ -5,6 +5,6 @@ module Spree::OrderMailerRefund
     @order = refund.payment.order
     @store = Spree::Store.current
     subject = Spree.t('order_mailer.refund_email.subject', site_name: @store.name)
-    mail(to: @order.email, from: @store.name, subject: subject)
+    mail(to: @order.email, from: from_address, subject: subject)
   end
 end
