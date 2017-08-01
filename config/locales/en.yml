@@ -88,3 +88,9 @@ en:
       promotable_only:
         name: "Promotable Only"
         description: "Contains only promotable products"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Dear Customer"
+        instructions: "Your order ##{number} has been shipped"
+        arrival: "Orders usually arrive within 2-5 business days."
+        appreciate: "We truly appreciate your support."

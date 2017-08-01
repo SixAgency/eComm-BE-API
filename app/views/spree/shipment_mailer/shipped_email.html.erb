@@ -8,7 +8,7 @@
         <%= Spree.t('shipment_mailer.shipped_email.instructions', number: @shipment.order.number) %>
       </p>
       <p>
-        <%= Spree.t('shipment_mailer.shipped_email.shipment_summary') %>
+        <%= Spree.t('shipment_mailer.shipped_email.arrival') %>
       </p>
       <table class="container">
         <tr>
@@ -34,12 +34,12 @@
       <% end %>
       <% if @shipment.note %>
         <p style="margin-top: 20px;">
-          <b>Note form the Kris Sorbie team:</b><br/>
+          <b>Additional note from the Kris Sorbie team:</b><br/>
           <%= @shipment.note.html_safe %>
         </p>
       <% end %>
       <p>
-        <%= Spree.t('shipment_mailer.shipped_email.thanks') %>
+        <%= Spree.t('shipment_mailer.shipped_email.appreciate') %>
       </p>
     </td>
     <td class="expander"></td>

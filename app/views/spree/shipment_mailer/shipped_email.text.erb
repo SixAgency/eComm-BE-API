@@ -3,17 +3,19 @@
 <%= Spree.t('shipment_mailer.shipped_email.instructions', number: @shipment.order.number) %>
 
 ============================================================
-<%= Spree.t('shipment_mailer.shipped_email.shipment_summary') %>
+<%= Spree.t('shipment_mailer.shipped_email.arrival') %>
 ============================================================
 <% @shipment.manifest.each do |item| %>
   <%= item.variant.sku %> <%= item.variant.product.name %> <%= item.variant.options_text %>
 <% end %>
 ============================================================
 
+<%= Spree.t('shipment_mailer.shipped_email.shipping_method', shipping_method: @shipment.shipping_method.name) %>
+
 <%= Spree.t('shipment_mailer.shipped_email.track_information', tracking: @shipment.tracking) if @shipment.tracking %>
 <%= Spree.t('shipment_mailer.shipped_email.track_link', url: @shipment.tracking_url) if @shipment.tracking_url %>
 
-<%= "Note form the Kris Sorbie team:" if @shipment.tracking %>
+<%= "Additional note from the Kris Sorbie team:" if @shipment.tracking %>
 <%= @shipment.note if @shipment.note %>
 
-<%= Spree.t('shipment_mailer.shipped_email.thanks') %>
+<%= Spree.t('shipment_mailer.shipped_email.appreciate') %>
