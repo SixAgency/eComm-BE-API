@@ -11,8 +11,9 @@ Shipping: <%= Spree::Money.new(@order.shipment_total, currency: @order.currency)
 <% if @order.all_adjustments.tax.exists? %>
     Tax: <%= Spree::Money.new(@order.additional_tax_total, currency: @order.currency) %> via <%= @order.all_adjustments.tax.pluck(:label).uniq.join(', ') %>
 <% end %>
-<% if @order.all_adjustments.promotion.eligible.exists? %>
-    Promotion: <%= Spree::Money.new(@order.promo_total, currency: @order.currency) %> via <%= @order.all_adjustments.promotion.eligible.pluck(:label).uniq.join(', ') %>
+<% if @order.all_adjustments.promotion.eligible.select{ |a| !a.source.calculator.is_a? Spree::Calculators::QuantityRate}.any? and
+        @order.promo_total != 0 %>
+    Promotion: <%= Spree::Money.new(@order.promo_total, currency: @order.currency) %> via <%= @order.all_adjustments.promotion.eligible.select{ |a| !a.source.calculator.is_a? Spree::Calculators::QuantityRate}.map(&:label).uniq.join(', ') %>
 <% end %>
 Payment Method: <%= @order.payments.map {|payment| Spree::PaymentMethod.find_with_destroyed(payment.payment_method_id).name if payment }.uniq.join(', ') %>
 
