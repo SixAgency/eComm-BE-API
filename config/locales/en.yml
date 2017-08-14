@@ -91,6 +91,11 @@ en:
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer"
-        instructions: "Your order ##{number} has been shipped"
         arrival: "Orders usually arrive within 2-5 business days."
         appreciate: "We truly appreciate your support."
+        shipping_method: "Shipping method: %{shipping_method}"
+        shipping_method_html: "<b>Shipping method:</b> %{shipping_method}"
+        track_information: "Tracking Information: %{tracking}"
+        track_information_html: "<b>Tracking Information:</b> %{tracking}"
+        track_link: "Tracking Link: %{url}"
+        track_link_html: "<b>Tracking Link:</b> %{url}"

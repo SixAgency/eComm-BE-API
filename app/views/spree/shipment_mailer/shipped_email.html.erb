@@ -5,7 +5,7 @@
         <%= Spree.t('shipment_mailer.shipped_email.dear_customer') %>
       </p>
       <p>
-        <%= Spree.t('shipment_mailer.shipped_email.instructions', number: @shipment.order.number) %>
+        Your order #<%= @shipment.order.number %> has been shipped
       </p>
       <p>
         <%= Spree.t('shipment_mailer.shipped_email.arrival') %>
@@ -20,16 +20,16 @@
         </tr>
       </table>
       <p>
-        <%= Spree.t('shipment_mailer.shipped_email.shipping_method', shipping_method: @shipment.shipping_method.name) %>
+        <%= Spree.t('shipment_mailer.shipped_email.shipping_method_html', shipping_method: @shipment.shipping_method.name) %>
       </p>
       <% if @shipment.tracking %>
         <p>
-          <%= Spree.t('shipment_mailer.shipped_email.track_information', tracking: @shipment.tracking) %>
+          <%= Spree.t('shipment_mailer.shipped_email.track_information_html', tracking: @shipment.tracking) %>
         </p>
       <% end %>
       <% if @shipment.tracking_url %>
         <p>
-          <%= Spree.t('shipment_mailer.shipped_email.track_link', url: link_to(@shipment.tracking_url, @shipment.tracking_url)).html_safe %>
+          <%= Spree.t('shipment_mailer.shipped_email.track_link_html', url: link_to(@shipment.tracking_url, @shipment.tracking_url)).html_safe %>
         </p>
       <% end %>
       <% if @shipment.note %>
