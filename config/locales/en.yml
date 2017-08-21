@@ -91,7 +91,7 @@ en:
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer"
-        arrival: "Orders usually arrive within 2-5 business days."
+        arrival: "Orders usually arrive within 2-7 business days."
         appreciate: "We truly appreciate your support."
         shipping_method: "Shipping method: %{shipping_method}"
         shipping_method_html: "<b>Shipping method:</b> %{shipping_method}"
