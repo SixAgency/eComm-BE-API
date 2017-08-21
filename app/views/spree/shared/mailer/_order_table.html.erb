@@ -9,7 +9,12 @@
       <tr>
         <td style="text-align:left;vertical-align:middle;border:1px solid #eee;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;word-wrap:break-word;color:#737373;padding:12px"><%= "#{item.name} (##{item.variant.sku})" %><br><small></small></td>
         <td style="text-align:left;vertical-align:middle;border:1px solid #eee;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#737373;padding:12px"><%= item.quantity %></td>
-        <td style="text-align:left;vertical-align:middle;border:1px solid #eee;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#737373;padding:12px"><span><%= item.single_money.to_html %></span></td>
+        <td style="text-align:left;vertical-align:middle;border:1px solid #eee;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#737373;padding:12px">
+          <span><%= item.single_money.to_html %></span>
+          <% if item.adjustments.promotion.eligible.select{ |a| a.source.calculator.is_a? Spree::Calculators::QuantityRate and a.amount != 0}.any? %>
+            <span style="font-weight:bold;color:#1adab1;">(You save <%= Spree::Money.new(item.adjustments.promotion.eligible.select{ |a| a.source.calculator.is_a? Spree::Calculators::QuantityRate }.map(&:amount).sum.abs, currency: @order.currency) %>)</span>
+          <% end %>
+        </td>
       </tr>
   <% end %>
   </tbody>
