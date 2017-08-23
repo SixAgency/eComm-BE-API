@@ -1,11 +1,8 @@
 <table class="row header">
   <tr>
     <td>
-      <p class="lede">
-        <%= Spree.t('shipment_mailer.shipped_email.dear_customer') %>
-      </p>
       <p>
-        Your order #<%= @shipment.order.number %> has been shipped
+        Order #<%= @shipment.order.number %> has been shipped
       </p>
       <p>
         <%= Spree.t('shipment_mailer.shipped_email.arrival') %> Please contact us at <a href="mailto:info@krissorbie.com" target="_blank">info@krissorbie.com</a> if you have any questions or concerns.
