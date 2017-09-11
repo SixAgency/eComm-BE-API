@@ -1,7 +1,7 @@
 <% @order.line_items.each do |item| %>
     Product: <%= "#{item.name} (##{item.variant.sku})" %>
     Quantity: <%= item.quantity %>
-    Price: <%= item.single_money.to_html %>
+    Price: <%= Spree::Money.new(item.pre_tax_amount, currency: @order.currency) %>
 <% end %>
 ---------------------------
 Subtotal: <%= @order.display_item_total.to_html %>
