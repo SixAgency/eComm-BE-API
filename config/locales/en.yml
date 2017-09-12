@@ -101,7 +101,7 @@ en:
         track_link_html: "<b>Tracking Link:</b> %{url}"
     eligibility_errors:
       messages:
-        has_excluded_product: Your cart contains an item that prevents this coupon code from being applied.
+        has_excluded_product: Promotional codes are not eligible on this item.
         item_total_less_than: This coupon code can't be applied to orders less than %{amount}.
         item_total_less_than_or_equal: This coupon code can't be applied to orders less than or equal to %{amount}.
         item_total_more_than: This coupon code can't be applied to orders higher than %{amount}.
@@ -109,8 +109,9 @@ en:
         limit_once_per_user: This coupon code can only be used once per user.
         missing_product: This coupon code can't be applied because you don't have all of the necessary items in your cart.
         missing_taxon: You need to add an item from all applicable categories before applying this coupon code.
-        no_applicable_products: You need to add an applicable item before applying this coupon code.
+        no_applicable_products: Promotional codes are not applicable on this item.
         no_matching_taxons: You need to add an item from an applicable category before applying this coupon code.
         no_user_or_email_specified: You need to login or provide your email before applying this coupon code.
         no_user_specified: You need to login before applying this coupon code.
         not_first_order: This coupon code can only be applied to your first order.
+    coupon_code_not_eligible: Promotional codes are not eligible on this item.
