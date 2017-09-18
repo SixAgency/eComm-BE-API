@@ -4,7 +4,7 @@
     Price: <%= Spree::Money.new(item.pre_tax_amount, currency: @order.currency) %>
 <% end %>
 ---------------------------
-Subtotal: <%= @order.display_item_total.to_html %>
+Subtotal: <%= Spree::Money.new(@order.subtotal, currency: @order.currency) %>
 ---------------------------
 
 Shipping: <%= Spree::Money.new(@order.shipment_total, currency: @order.currency) %> <%= @order.shipments.map { |shipment| shipment.selected_shipping_rate.name }.join(', ') %>

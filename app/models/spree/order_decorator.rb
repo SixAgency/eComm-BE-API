@@ -22,6 +22,11 @@ Spree::Order.class_eval do
     end
   end
 
+  def subtotal
+    ad_total = adjustments.map { |adj| adj.label.include?('Promotion') ? 0 : adj.amount }.sum
+    return item_total + adjustment_total - additional_tax_total - ad_total
+  end
+
   def sale_amount
     line_items.inject(0.0) { |sum, li| sum + li.sale_amount }
   end

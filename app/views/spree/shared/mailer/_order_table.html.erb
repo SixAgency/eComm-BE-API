@@ -21,7 +21,7 @@
   <tfoot>
   <tr>
     <th scope="row" colspan="2" style="text-align:left;border-top-width:4px;color:#737373;border:1px solid #e4e4e4;padding:12px">Subtotal:</th>
-    <td style="text-align:left;border-top-width:4px;color:#737373;border:1px solid #e4e4e4;padding:12px"><span><%= @order.display_item_total.to_html %></span></td>
+    <td style="text-align:left;border-top-width:4px;color:#737373;border:1px solid #e4e4e4;padding:12px"><span><%= Spree::Money.new(@order.subtotal, currency: @order.currency) %></span></td>
   </tr>
   <tr>
     <th scope="row" colspan="2" style="text-align:left;color:#737373;border:1px solid #e4e4e4;padding:12px">Shipping:</th>
