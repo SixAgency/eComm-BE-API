@@ -1,0 +1,3 @@
+<!-- insert_after "erb[loud]:contains('button_link_to Spree.t(:new_order)')" -->
+
+<%= button_link_to Spree.t(:export_to_csv), admin_orders_url(:format => :csv), class: "btn-success", icon: 'download-alt', id: 'export_to_csv' %>
