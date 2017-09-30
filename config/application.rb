@@ -1,5 +1,5 @@
 require_relative 'boot'
-
+require 'csv'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -11,7 +11,7 @@ module EComm
 
     config.to_prepare do
       # Load application's model / class decorators
-      Dir.glob(File.join(File.dirname(__FILE__), "../app/**/*_decorator*.rb")) do |c|
+      Dir.glob(File.join(File.dirname(__FILE__), "../{lib,app}/**/*_decorator*.rb")) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
       end
 
@@ -36,6 +36,7 @@ module EComm
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.autoload_paths << Rails.root.join('payment/**/*')
+    config.autoload_paths << Rails.root.join('lib/')
 
     config.active_job.queue_adapter = :delayed_job
   end
