@@ -1,3 +1,5 @@
+require "box_packer"
+
 Spree::Calculator::Shipping::ActiveShipping::Base.class_eval do
 
 private

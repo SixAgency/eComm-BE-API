@@ -36,7 +36,7 @@ module EComm
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.autoload_paths << Rails.root.join('payment/**/*')
-    config.autoload_paths << Rails.root.join('lib/')
+    config.autoload_paths << "#{Rails.root}/lib"
 
     config.active_job.queue_adapter = :delayed_job
   end
