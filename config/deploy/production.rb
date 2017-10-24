@@ -13,6 +13,8 @@ set :nginx_server_name, ENV['production_server_name']
 set :nginx_use_ssl, true
 set :nginx_cert_name, 'ks'
 
+set :delayed_job_workers, 1
+
 
 # server-based syntax
 # ======================

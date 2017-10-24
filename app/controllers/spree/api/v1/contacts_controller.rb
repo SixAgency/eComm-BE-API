@@ -5,7 +5,6 @@ class Spree::Api::V1::ContactsController < ApplicationController
     contact_email
   end
 
-
   private
 
   def contact_email
