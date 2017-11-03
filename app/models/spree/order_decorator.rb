@@ -32,7 +32,7 @@ Spree::Order.class_eval do
   end
 
   def self.to_csv(orders)
-    headers = ["Order Date", "Order #", "Shipping Method", "Email", "Name",
+    headers = ["Order Date", "Order #", "Order State", "Shipping Method", "Email", "Name",
                "Address 1", "Address 2", "City", "State", "Zip", "Item Count",
                "Order Total", "Subtotal", "Tax Total", "Shipping"]
 
@@ -49,6 +49,7 @@ Spree::Order.class_eval do
       orders.each do |order|
         row = [order.completed_at.try(:strftime, "%m/%d/%Y"),
                order.number,
+               order.refunds.any? ? 'refunded': order.state,
                order.shipments.map(&:shipping_method).compact.map(&:name).uniq.join(", "),
                order.email,
                order.name,
