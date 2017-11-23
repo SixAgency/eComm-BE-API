@@ -32,7 +32,7 @@ Spree::Order.class_eval do
   end
 
   def self.to_csv(orders)
-    headers = ["Order Date", "Order #", "Order State", "Shipping Method", "Email", "Name",
+    headers = ["Order Date", "Order #", "Order Status", "Shipping Method", "Email", "Name",
                "Address 1", "Address 2", "City", "State", "Zip", "Item Count",
                "Order Total", "Subtotal", "Tax Total", "Shipping"]
 
