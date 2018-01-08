@@ -18,6 +18,6 @@
     <h3 style="color:#1adab1;display:block;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size:16px;font-weight:bold;line-height:130%;margin:16px 0 8px;text-align:left">Shipping address</h3>
     <% ship_address = @order.ship_address %>
     <p style="color:#737373;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;margin:0 0 16px"><%= "#{ship_address.firstname} #{ship_address.lastname}" %>
-      <br><%= ship_address.address1 %><br><%= ship_address.city %><br><%= ship_address.state.name %><br><%= ship_address.zipcode %></p>
+      <br><%= ship_address.address1 %><br><%= ship_address.address2 %><br><%= ship_address.city %><br><%= ship_address.state.name %><br><%= ship_address.zipcode %></p>
   </td>
 </tr></tbody></table>
