@@ -5,6 +5,6 @@ Customer details
 
 2. Phone: <%= @order.bill_address.phone %>
 
-3. Billing address: <% bill_address = @order.bill_address %>, <%= "#{bill_address.firstname} #{bill_address.lastname}" %>, <%= bill_address.address1 %>, <%= bill_address.city %>, <%= bill_address.state.name %>, <%= bill_address.zipcode %>
+3. Billing address: <% bill_address = @order.bill_address %>, <%= "#{bill_address.firstname} #{bill_address.lastname}" %>, <%= bill_address.address1 %>, <%= bill_address.city %>, <%= bill_address.state.name %>, <%= bill_address.zipcode %>, <%= bill_address.company %>
 
-4. Shipping address: <% ship_address = @order.ship_address %>, <%= "#{ship_address.firstname} #{ship_address.lastname}" %>, <%= ship_address.address1 %>, <%= ship_address.address2 %>, <%= ship_address.city %>, <%= ship_address.state.name %>, <%= ship_address.zipcode %>
+4. Shipping address: <% ship_address = @order.ship_address %>, <%= "#{ship_address.firstname} #{ship_address.lastname}" %>, <%= ship_address.address1 %>, <%= ship_address.address2 %>, <%= ship_address.city %>, <%= ship_address.state.name %>, <%= ship_address.zipcode %>, <%= ship_address.company %>
