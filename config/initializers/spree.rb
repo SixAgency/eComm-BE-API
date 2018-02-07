@@ -57,6 +57,9 @@ Spree::Api::ApiHelpers.shipment_attributes.push :note
 # In order to run guest user that don't require an API key
 Spree::Api::Config[:requires_authentication] = false
 
+# Other Spree settings
+Spree::Config[:company] = true
+
 # Merges users orders to their account after sign in and sign up.
 Warden::Manager.after_set_user except: :fetch do |user, auth, opts|
   # API flow - json request
